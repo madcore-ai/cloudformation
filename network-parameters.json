@@ -1,0 +1,10 @@
+[
+  {
+    "ParameterKey": "Type",
+    "ParameterValue": "Production"
+  }, 
+  {
+    "ParameterKey": "VPCCIDRBlock",
+    "ParameterValue": "10.105.0.0/16"
+  }
+]
