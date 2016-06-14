@@ -1,0 +1,156 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Devops Factory. Remote Control Infra",
+  
+  "Parameters" : {
+    "VpcId": {
+      "Type": "String",
+      "AllowedPattern": "vpc-[a-f0-9]{8}", 
+      "ConstraintDescription": "Must be valid VPC identifier vpc-xxxxxxxx", 
+      "Description": "The ID of the VPC this Application stack will be launched in."
+    },
+    "Env" : {
+      "Type" : "String",
+      "AllowedValues" : ["df"],
+      "Default" : "df",
+      "Description" : "The Environment type to provision e.g. df.",
+      "ConstraintDescription" : "Specify an environment to provision e.g. dev for development environment."
+    },
+    "VpgId" : {
+      "Type" : "String",
+      "AllowedPattern": "vgw-[a-f0-9]{8}",
+      "ConstraintDescription": "Must be valid VPC identifier vgw-xxxxxxxx", 
+      "Description": "The ID of the VPC this Application stack will be launched in."
+    },
+    "IgwId" : {
+      "Type" : "String",
+      "AllowedPattern": "igw-[a-f0-9]{8}",
+      "ConstraintDescription": "Must be valid IGW identifier igw-xxxxxxxx", 
+      "Description": "The ID of the Internet Gateway."
+    },
+    "KeyName" : {
+      "Type" : "String",
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instances",
+      "MinLength" : "1",
+      "MaxLength" : "64",
+      "AllowedPattern" : "[-_ a-zA-Z0-9]*",
+      "ConstraintDescription" : "Must contain only alphanumeric characters, spaces, dashes and underscores."
+    },    
+    "FollowmeSG": {
+      "Type": "String",
+      "AllowedPattern": "sg-[a-f0-9]{8}", 
+      "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx", 
+      "Description": "A Security Group ID for Generic Linux hosts"
+    }
+  },  
+  "Mappings": { 
+    "EnvCodeMap"     : {       
+      "df" : {
+        "LongName" : "DevopsFactory"
+      }
+    }, 
+    "df"     : {       
+      "eu-west-1a" : {
+        "PublicNet" : "10.99.101.0/24",
+        "PrivateNet" : "10.99.201.0/24"
+      },        
+      "eu-west-1b" : {
+        "PublicNet" : "10.99.102.0/24",
+        "PrivateNet" : "10.99.202.0/24"
+      },        
+      "eu-west-1c" : {
+        "PublicNet" : "10.99.103.0/24",
+        "PrivateNet" : "10.99.203.0/24"                
+      }                   
+    } 
+  },    
+  
+  "Resources": {                   
+    "PublicNetZoneA" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VpcId" },
+        "AvailabilityZone": {"Fn::Select": ["0", {"Fn::GetAZs": ""}]},
+        "CidrBlock" :  { "Fn::FindInMap" : [{ "Ref" : "Env" }, "eu-west-1a", "PublicNet"] },
+        "Tags" : [
+          { "Key" : "Network", "Value" : "Private" },                   
+          { "Key" : "Environment", "Value" : { "Ref" : "Env" } },
+          { "Key" : "EnvLongName", "Value" : { "Fn::FindInMap" : [ "EnvCodeMap", { "Ref" : "Env" }, "LongName" ] } },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PublicZoneA"] ]} }
+        ]
+      }
+    },
+    "PublicNetZoneB" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VpcId" },
+        "AvailabilityZone": {"Fn::Select": ["1", {"Fn::GetAZs": ""}]},
+        "CidrBlock" :  { "Fn::FindInMap" : [ { "Ref" : "Env" }, "eu-west-1b", "PublicNet" ] },
+        "Tags" : [
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Environment", "Value" : { "Ref" : "Env" } },
+          { "Key" : "EnvLongName", "Value" : { "Fn::FindInMap" : [ "EnvCodeMap", { "Ref" : "Env" }, "LongName" ] } },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PublicZoneB"] ]} }
+        ]
+      }
+    },
+    "PublicNetZoneC" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VpcId" },
+        "AvailabilityZone": {"Fn::Select": ["2", {"Fn::GetAZs": ""}]},
+        "CidrBlock" :  { "Fn::FindInMap" : [ { "Ref" : "Env" }, "eu-west-1c", "PublicNet" ] },
+        "Tags" : [
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Environment", "Value" : { "Ref" : "Env" } },
+          { "Key" : "EnvLongName", "Value" : { "Fn::FindInMap" : [ "EnvCodeMap", { "Ref" : "Env" }, "LongName" ] } },        
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PublicZoneC"] ]} }
+        ]
+      }
+    },  
+    
+    "PrivateNetZoneA" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VpcId" },
+        "AvailabilityZone": {"Fn::Select": ["0", {"Fn::GetAZs": ""}]},
+        "CidrBlock" :  { "Fn::FindInMap" : [ { "Ref" : "Env" }, "eu-west-1a", "PrivateNet" ] },
+        "Tags" : [
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Environment", "Value" : { "Ref" : "Env" } },
+          { "Key" : "EnvLongName", "Value" : { "Fn::FindInMap" : [ "EnvCodeMap", { "Ref" : "Env" }, "LongName" ] } },         
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PrivateZoneA"] ]} }      
+        ]
+      }
+    },
+    "PrivateNetZoneB" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VpcId" },
+        "AvailabilityZone": {"Fn::Select": ["1", {"Fn::GetAZs": ""}]},
+        "CidrBlock" :  { "Fn::FindInMap" : [ { "Ref" : "Env" }, "eu-west-1b", "PrivateNet" ] },
+        "Tags" : [
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Environment", "Value" : { "Ref" : "Env" } },
+          { "Key" : "EnvLongName", "Value" : { "Fn::FindInMap" : [ "EnvCodeMap", { "Ref" : "Env" }, "LongName" ] } },       
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PrivateZoneB"] ]} }      
+        ]
+      }
+    },
+    "PrivateNetZoneC" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VpcId" },
+        "AvailabilityZone": {"Fn::Select": ["2", {"Fn::GetAZs": ""}]},
+        "CidrBlock" :  { "Fn::FindInMap" : [ { "Ref" : "Env" }, "eu-west-1c", "PrivateNet" ] },
+        "Tags" : [
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Environment", "Value" : { "Ref" : "Env" } },
+          { "Key" : "EnvLongName", "Value" : { "Fn::FindInMap" : [ "EnvCodeMap", { "Ref" : "Env" }, "LongName" ] } },        
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PrivateZoneC"] ]} }      
+        ]
+      }
+    }         
+  }
+}

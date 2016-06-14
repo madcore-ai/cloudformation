@@ -66,47 +66,36 @@
         "VpnGatewayId" : { "Ref" : "VPNGateway" }
       }
     },                          
-    "SecurityGroupWindowsServer" : {
+    "SecurityGroupDevopsfactoryFollowme" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "Properties" : {
-        "GroupDescription" : "Provides administrator access to Windows hosts",
+        "GroupDescription" : "Provides Devops Factory Android App user access to control instances",
         "VpcId" : {"Ref" : "VPC"},
         "Tags" : [
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ "SEC-", { "Ref" : "AWS::StackName"}, "-WindowsServer"] ]} }                        
-        ],             
-        "SecurityGroupIngress" : [                    
-          { "IpProtocol" : "tcp", "FromPort" : "3389", "ToPort" : "3389", "CidrIp" : "10.209.220.0/24" },
-          { "IpProtocol" : "tcp", "FromPort" : "3389", "ToPort" : "3389", "CidrIp" : "10.216.220.0/24" },
-          { "IpProtocol" : "tcp", "FromPort" : "3389", "ToPort" : "3389", "CidrIp" : "10.216.223.0/24" }          
-        ]
-      }
-    },        
-    "SecurityGroupLinuxServer" : {
-      "Type" : "AWS::EC2::SecurityGroup",
-      "Properties" : {
-        "GroupDescription" : "Provides administrator access to Linux hosts",
-        "VpcId" : {"Ref" : "VPC"},
-        "Tags" : [
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ "SEC-", { "Ref" : "AWS::StackName"}, "-LinuxServer"] ]} }                        
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ "SEC-", { "Ref" : "AWS::StackName"}, "-FollowMe"] ]} }                        
         ],                
         "SecurityGroupIngress" : [
-          { "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : "10.209.220.0/24" },
-          { "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : "10.216.220.0/24" },
           { "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : "10.216.223.0/24" }           
         ]
       }
     }                          
    },   
    "Outputs" : {
-    "Vpc" : {
+    "VpcId" : {
       "Description" : "Vpc ID",
       "Value" : { "Ref" : "VPC" }
     },    
-    "WindowsSecurityGroupId" : {
-      "Value" : {"Ref" : "SecurityGroupWindowsServer" }
+    "VgwId" : {
+      "Description" : "Virtual Private Gateway ID",
+      "Value" : { "Ref" : "VPNGateway" }
     },    
-    "LinuxSecurityGroupId" : {
-      "Value" : {"Ref" : "SecurityGroupLinuxServer" }
+    "IgwId" : {
+      "Description" : "Internet Gateway ID",
+      "Value" : { "Ref" : "InternetGateway" }
+    },    
+    "FollowmeSgId" : {
+      "Description" : "Defops Factory Follow Me Security Group ID",
+      "Value" : {"Ref" : "SecurityGroupDevopsfactoryFollowme" }
     }
    }
    

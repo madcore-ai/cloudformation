@@ -1,0 +1,29 @@
+[
+  {
+    "ParameterKey": "VpcId",
+    "ParameterValue": "vpc-dba76cbf"
+  }, 
+  {
+    "ParameterKey": "Env",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "VgwId",
+    "ParameterValue": "vgw-01566575"
+  },
+  {
+    "ParameterKey": "IgwId",
+    "ParameterValue": "vgw-01566575"
+  },
+  {
+    "ParameterKey": "KeyName",
+    "ParameterValue": ""
+  },
+  {
+    "ParameterKey": "FollowmeSgId",
+    "ParameterValue": "sg-6939b50e"
+  }
+
+
+
+]
