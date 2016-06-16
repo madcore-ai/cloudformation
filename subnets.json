@@ -17,7 +17,7 @@
       "Description" : "The Environment type to provision e.g. df.",
       "ConstraintDescription" : "Specify an environment to provision e.g. dev for development environment."
     },
-    "VpgId" : {
+    "VgwId" : {
       "Type" : "String",
       "AllowedPattern": "vgw-[a-f0-9]{8}",
       "ConstraintDescription": "Must be valid VPC identifier vgw-xxxxxxxx", 
@@ -37,11 +37,11 @@
       "AllowedPattern" : "[-_ a-zA-Z0-9]*",
       "ConstraintDescription" : "Must contain only alphanumeric characters, spaces, dashes and underscores."
     },    
-    "FollowmeSG": {
+    "FollowmeSgId": {
       "Type": "String",
       "AllowedPattern": "sg-[a-f0-9]{8}", 
       "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx", 
-      "Description": "A Security Group ID for Generic Linux hosts"
+      "Description": "A Devops Factory Follow-Me type Security Group"
     }
   },  
   "Mappings": { 
@@ -151,6 +151,32 @@
           { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PrivateZoneC"] ]} }      
         ]
       }
-    }         
+    }
+  },
+  "Outputs" : {
+    "PublicNetZoneA" : {
+       "Description" : "Security Group Public Az-A",
+       "Value" : { "Ref" : "PublicNetZoneA" }
+    },
+    "PublicNetZoneB" : {
+       "Description" : "Security Group Public Az-B",
+       "Value" : { "Ref" : "PublicNetZoneB" }
+    },
+    "PublicNetZoneC" : {
+       "Description" : "Security Group Public Az-C",
+       "Value" : { "Ref" : "PublicNetZoneC" }
+    },
+    "PrivateNetZoneA" : {
+       "Description" : "Security Group Private Az-A",
+       "Value" : { "Ref" : "PrivateNetZoneA" }
+    },
+    "PrivateNetZoneB" : {
+       "Description" : "Security Group Private Az-B",
+       "Value" : { "Ref" : "PrivateNetZoneB" }
+    },
+    "PrivateNetZoneC" : {
+       "Description" : "Security Group Private Az-C",
+       "Value" : { "Ref" : "PrivateNetZoneC" }
+    }
   }
 }
