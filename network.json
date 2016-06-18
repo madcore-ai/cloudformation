@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
   
-  "Description" : "DevopsFactory VPC Stack. Provisions: Internet Gateway, VPN Gateway, WindowsSecurityGroup, LinuxSecurityGroup",
+  "Description" : "DevopsFactory VPC Stack. Provisions: 3 private subnets, 3 public subnets, Internet Gateway, VPN Gateway",
   
   "Parameters" : {
     "Type" : {

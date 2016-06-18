@@ -1,0 +1,10 @@
+[
+  {
+    "ParameterKey": "VpcId",
+    "ParameterValue": "vpc-d94a9fbd"
+  },
+  {
+    "ParameterKey": "FollowMeIpAddress",
+    "ParameterValue": "10.10.10.5"
+  }
+]
