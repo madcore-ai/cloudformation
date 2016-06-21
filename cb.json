@@ -1,0 +1,99 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Devops Factory Control Box, Ubuntu Trusty Base plus tools like Jenkins, Habitat, Docker, HAProxy, SSL Self-generated cert.",
+    "Parameters": {
+        "KeyName": {
+            "Type": "String",
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances",
+            "MinLength": "1",
+            "MaxLength": "64",
+            "AllowedPattern": "[-_ a-zA-Z0-9]*",
+            "ConstraintDescription": "Must contain only alphanumeric characters, spaces, dashes and underscores."
+        },
+        "FollowmeSecurityGroup": {
+            "Type": "String",
+            "AllowedPattern": "sg-[a-f0-9]{8}",
+            "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx",
+            "Description": "Devops Factory Follow Me Security Group"
+        },
+        "PublicNetZoneA": {
+            "Type": "String",
+            "AllowedPattern": "subnet-[a-f0-9]{8}",
+            "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx",
+            "Description": "Devops Factory Public Subnet Zone A"
+        }
+    },
+    "Mappings": {
+        "UbuntuTrustyAMI": {
+            "eu-west-1": {
+                "AMI": "ami-f95ef58a"
+            }
+        }
+    },
+    "Resources": {
+        "ControlBoxInstance": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "InstanceType": "t2.small",
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "UbuntuTrustyAMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        "AMI"
+                    ]
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    {
+                                        "Ref": "AWS::StackName"
+                                    },
+                                    "KeyServer"
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "NetworkInterfaces": [
+                    {
+                        "AssociatePublicIpAddress": true,
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": "0",
+                        "SubnetId": {
+                    "Ref": "PublicNetZoneA"
+                },
+                        "GroupSet": [
+                            {
+                                "Ref": "FollowmeSecurityGroup"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "ControlBoxPublicIp": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "ControlBoxInstance",
+                    "PublicIp"
+                ]
+            }
+        },
+        "ControlBoxInstanceId": {
+            "Value": {
+                "Ref": "ControlBoxInstance"
+            }
+        }
+    }
+}

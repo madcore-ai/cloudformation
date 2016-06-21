@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "KeyName",
+    "ParameterValue": "mac2"
+  }, 
+  {
+    "ParameterKey": "FollowmeSecurityGroup",
+    "ParameterValue": "sg-0d52d86a"
+  },
+  {
+    "ParameterKey": "PublicNetZoneA",
+    "ParameterValue": "subnet-586d9f00"
+  }
+]
