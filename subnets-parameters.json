@@ -1,7 +1,7 @@
 [
   {
     "ParameterKey": "VpcId",
-    "ParameterValue": "vpc-dba76cbf"
+    "ParameterValue": "vpc-d94a9fbd"
   }, 
   {
     "ParameterKey": "Env",
@@ -9,21 +9,14 @@
   },
   {
     "ParameterKey": "VgwId",
-    "ParameterValue": "vgw-01566575"
+    "ParameterValue": "vgw-a85b68dc"
   },
   {
     "ParameterKey": "IgwId",
-    "ParameterValue": "igw-c31d31a6"
+    "ParameterValue": "igw-88220ced"
   },
   {
     "ParameterKey": "KeyName",
     "ParameterValue": "mac2"
-  },
-  {
-    "ParameterKey": "FollowmeSgId",
-    "ParameterValue": "sg-6939b50e"
   }
-
-
-
 ]

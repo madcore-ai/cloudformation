@@ -1,1 +1,1 @@
-aws cloudformation describe-stacks --stack-name DevopsfactoryNetwork
+aws cloudformation describe-stacks --stack-name DevopsFactoryNetworkBasic001
