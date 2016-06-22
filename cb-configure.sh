@@ -1,3 +1,4 @@
+#!/bin/bash -v
 # Ubuntu Trusty
 # From Ubuntu user
 pushd /tmp
@@ -16,6 +17,7 @@ popd
 sudo su -c "mkdir -p /var/lib/jenkins/git/habitat" jenkins
 sudo su -c "git clone https://github.com/habitat-sh/habitat /var/lib/jenkins/git/habitat" jenkins
 sudo su -c "/var/lib/jenkins/git/habitat/components/hab/install.sh" 
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin job-dsl -deploy" jenkins
 
 
 

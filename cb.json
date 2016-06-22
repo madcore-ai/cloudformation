@@ -47,6 +47,7 @@
                 "KeyName": {
                     "Ref": "KeyName"
                 },
+                "IamInstanceProfile" : { "Ref" : "IamDevopsFactoryInstanceProfile" },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -63,6 +64,25 @@
                         }
                     }
                 ],
+                "UserData" : { "Fn::Join" : ["", [
+                    "IyEvYmluL2Jhc2ggLXYNCiMgVWJ1bnR1IFRydXN0eQ0KIyBGcm9tIFVidW50dSB1c2VyDQpwdXNoZCAv",
+                    "dG1wDQogICAgc3VkbyB3Z2V0IC1xIC1PIC0gaHR0cHM6Ly9qZW5raW5zLWNpLm9yZy9kZWJpYW4vamVu",
+                    "a2lucy1jaS5vcmcua2V5IHwgc3VkbyBhcHQta2V5IGFkZCAtDQogICAgc3VkbyBzaCAtYyAnZWNobyBk",
+                    "ZWIgaHR0cDovL3BrZy5qZW5raW5zLWNpLm9yZy9kZWJpYW4tc3RhYmxlIGJpbmFyeS8gPiAvZXRjL2Fw",
+                    "dC9zb3VyY2VzLmxpc3QuZC9qZW5raW5zLmxpc3QnDQogICAgc3VkbyBhcHQtZ2V0IHVwZGF0ZQ0KICAg",
+                    "IHN1ZG8gYXB0LWdldCBpbnN0YWxsIG9wZW5qZGstNy1qZGsgZ2l0IGplbmtpbnMgLXkNCiAgICBzdWRv",
+                    "IGdyb3VwYWRkIGhhYiAmJiB1c2VyYWRkIC1nIGhhYiAtcyAvYmluL2Jhc2ggLW0gaGFiDQogICAgc3Vk",
+                    "byB1c2VybW9kIC1hRyBkb2NrZXIgamVua2lucw0KICAgIHN1ZG8gdXNlcm1vZCAtYUcgZG9ja2VyIGhh",
+                    "Yg0KICAgIHN1ZG8gY3VybCAtZnNTTCBodHRwczovL2dldC5kb2NrZXIuY29tLyB8IHNoDQogICAgc3Vk",
+                    "byBjdXJsIC1MIGh0dHBzOi8vZ2l0aHViLmNvbS9kb2NrZXIvY29tcG9zZS9yZWxlYXNlcy9kb3dubG9h",
+                    "ZC8xLjcuMS9kb2NrZXItY29tcG9zZS1gdW5hbWUgLXNgLWB1bmFtZSAtbWAgPiAvdXNyL2xvY2FsL2Jp",
+                    "bi9kb2NrZXItY29tcG9zZQ0KICAgIHN1ZG8gY3VybCAtc1NmIGh0dHBzOi8vc3RhdGljLnJ1c3QtbGFu",
+                    "Zy5vcmcvcnVzdHVwLnNoIHwgc2gNCnBvcGQNCg0Kc3VkbyBzdSAtYyAibWtkaXIgLXAgL3Zhci9saWIv",
+                    "amVua2lucy9naXQvaGFiaXRhdCIgamVua2lucw0Kc3VkbyBzdSAtYyAiZ2l0IGNsb25lIGh0dHBzOi8v",
+                    "Z2l0aHViLmNvbS9oYWJpdGF0LXNoL2hhYml0YXQgL3Zhci9saWIvamVua2lucy9naXQvaGFiaXRhdCIg",
+                    "amVua2lucw0Kc3VkbyBzdSAtYyAiL3Zhci9saWIvamVua2lucy9naXQvaGFiaXRhdC9jb21wb25lbnRz",
+                    "L2hhYi9pbnN0YWxsLnNoIiA="
+                ]]},
                 "NetworkInterfaces": [
                     {
                         "AssociatePublicIpAddress": true,
@@ -79,7 +99,47 @@
                     }
                 ]
             }
-        }
+        },
+        
+        "IamDevopsFactoryRole": {
+          "Type": "AWS::IAM::Role",
+          "Properties": {
+            "AssumeRolePolicyDocument": {
+              "Statement": [ 
+                { "Effect": "Allow", 
+                  "Principal": {
+                    "Service": [ "ec2.amazonaws.com" ]
+                  },
+                  "Action": [ "sts:AssumeRole" ]
+                }
+              ]
+            },        
+            "Path": "/",
+            "Policies": [
+              { "PolicyName" :  "policy-df-controlbox",
+                "PolicyDocument": { 
+                  "Statement": [                
+                    {
+                      "Action": [ "ec2:DescribeTags","ec2:StartInstances","ec2:StopInstances"],
+                      "Effect": "Allow",      
+                      "Resource": ["*"]
+                    }               
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        
+        "IamDevopsFactoryInstanceProfile": {
+          "Type": "AWS::IAM::InstanceProfile",
+          "Properties": {
+            "Path": "/",
+            "Roles": [ { "Ref": "IamDevopsFactoryRole" } ]
+          }
+        }     
+        
+        
     },
     "Outputs": {
         "ControlBoxPublicIp": {
