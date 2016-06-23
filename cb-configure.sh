@@ -1,6 +1,8 @@
 #!/bin/bash -v
-# Ubuntu Trusty
+# Ubuntu Trusty Initialization from Cloud-Init
 # From Ubuntu user
+
+# PREREQUESITES
 pushd /tmp
     sudo wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
     sudo sh -c 'echo deb http://pkg.jenkins-ci.org/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
@@ -14,10 +16,21 @@ pushd /tmp
     sudo curl -sSf https://static.rust-lang.org/rustup.sh | sh
 popd
 
+# HABITAT
 sudo su -c "mkdir -p /var/lib/jenkins/git/habitat" jenkins
 sudo su -c "git clone https://github.com/habitat-sh/habitat /var/lib/jenkins/git/habitat" jenkins
 sudo su -c "/var/lib/jenkins/git/habitat/components/hab/install.sh" 
+
+# JENKINS PLUGINS
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin git -deploy" jenkins
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin ssh-credentials" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin job-dsl -deploy" jenkins
 
-
-
+# CONFIGURE AND RUN 1ST SEED JOB (WILL CREATE ALL OTHER JOBS FROM REPO)
+sudo su -c "mkdir -p /var/lib/jenkins/jobs/seed-dsl" jenkins
+sudo su -c "mkdir -p /var/lib/jenkins/workspace/seed-dsl/controlbox" jenkins
+sudo su -c "git clone https://bitbucket.org/ronaanimation/controlbox.git /var/lib/jenkins/workspace/seed-dsl/controlbox" jenkins
+sudo su -c "cp /var/lib/jenkins/workspace/seed-dsl/controlbox/seed-dls_config.xml /var/lib/jenkins/jobs/seed-dsl/config.xml" jenkins
+sudo service jenkins restart
+sudo su -c "until curl -sL -w '%{http_code}' 'http://127.0.0.1:8080/cli/' -o /dev/null | grep -m 1 '200'; do : ; done" jenkins
+sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 build seed-dsl" jenkins
