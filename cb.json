@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Devops Factory Control Box, Ubuntu Trusty Base plus tools like Jenkins, Habitat, Docker, HAProxy, SSL Self-generated cert.",
+    "Description": "Devops Factory Control Box, Ubuntu Xenial Base plus tools like Jenkins, Habitat, Docker, HAProxy, SSL Self-generated cert.",
     "Parameters": {
         "KeyName": {
             "Type": "String",
@@ -24,9 +24,9 @@
         }
     },
     "Mappings": {
-        "UbuntuTrustyAMI": {
+        "UbuntuXenialAMI": {
             "eu-west-1": {
-                "AMI": "ami-f95ef58a"
+                "AMI": "ami-0ae77879"
             }
         }
     },
@@ -37,7 +37,7 @@
                 "InstanceType": "t2.small",
                 "ImageId": {
                     "Fn::FindInMap": [
-                        "UbuntuTrustyAMI",
+                        "UbuntuXenialAMI",
                         {
                             "Ref": "AWS::Region"
                         },
@@ -66,42 +66,44 @@
                 ],
                 "UserData" : { "Fn::Join" : ["", [
                     "IyEvYmluL2Jhc2ggLXYNCiMgVWJ1bnR1IFRydXN0eSBJbml0aWFsaXphdGlvbiBmcm9tIENsb3VkLUlu",
-                    "aXQNCiMgRnJvbSBVYnVudHUgdXNlcg0KDQojIFBSRVJFUVVFU0lURVMNCnB1c2hkIC90bXANCiAgICBz",
-                    "dWRvIHdnZXQgLXEgLU8gLSBodHRwczovL2plbmtpbnMtY2kub3JnL2RlYmlhbi9qZW5raW5zLWNpLm9y",
-                    "Zy5rZXkgfCBzdWRvIGFwdC1rZXkgYWRkIC0NCiAgICBzdWRvIHNoIC1jICdlY2hvIGRlYiBodHRwOi8v",
-                    "cGtnLmplbmtpbnMtY2kub3JnL2RlYmlhbi1zdGFibGUgYmluYXJ5LyA+IC9ldGMvYXB0L3NvdXJjZXMu",
-                    "bGlzdC5kL2plbmtpbnMubGlzdCcNCiAgICBzdWRvIGFwdC1nZXQgdXBkYXRlDQogICAgc3VkbyBhcHQt",
-                    "Z2V0IGluc3RhbGwgb3Blbmpkay03LWpkayBnaXQgamVua2lucyAteQ0KICAgIHN1ZG8gZ3JvdXBhZGQg",
-                    "aGFiICYmIHVzZXJhZGQgLWcgaGFiIC1zIC9iaW4vYmFzaCAtbSBoYWINCiAgICBzdWRvIHVzZXJtb2Qg",
-                    "LWFHIGRvY2tlciBqZW5raW5zDQogICAgc3VkbyB1c2VybW9kIC1hRyBkb2NrZXIgaGFiDQogICAgc3Vk",
-                    "byBjdXJsIC1mc1NMIGh0dHBzOi8vZ2V0LmRvY2tlci5jb20vIHwgc2gNCiAgICBzdWRvIGN1cmwgLUwg",
-                    "aHR0cHM6Ly9naXRodWIuY29tL2RvY2tlci9jb21wb3NlL3JlbGVhc2VzL2Rvd25sb2FkLzEuNy4xL2Rv",
-                    "Y2tlci1jb21wb3NlLWB1bmFtZSAtc2AtYHVuYW1lIC1tYCA+IC91c3IvbG9jYWwvYmluL2RvY2tlci1j",
-                    "b21wb3NlDQogICAgc3VkbyBjdXJsIC1zU2YgaHR0cHM6Ly9zdGF0aWMucnVzdC1sYW5nLm9yZy9ydXN0",
-                    "dXAuc2ggfCBzaA0KcG9wZA0KDQojIEhBQklUQVQNCnN1ZG8gc3UgLWMgIm1rZGlyIC1wIC92YXIvbGli",
-                    "L2plbmtpbnMvZ2l0L2hhYml0YXQiIGplbmtpbnMNCnN1ZG8gc3UgLWMgImdpdCBjbG9uZSBodHRwczov",
-                    "L2dpdGh1Yi5jb20vaGFiaXRhdC1zaC9oYWJpdGF0IC92YXIvbGliL2plbmtpbnMvZ2l0L2hhYml0YXQi",
-                    "IGplbmtpbnMNCnN1ZG8gc3UgLWMgIi92YXIvbGliL2plbmtpbnMvZ2l0L2hhYml0YXQvY29tcG9uZW50",
-                    "cy9oYWIvaW5zdGFsbC5zaCIgDQoNCiMgSkVOS0lOUyBQTFVHSU5TDQpzdWRvIHN1IC1jICJqYXZhIC1q",
-                    "YXIgL3Zhci9jYWNoZS9qZW5raW5zL3dhci9XRUItSU5GL2plbmtpbnMtY2xpLmphciAtcyBodHRwOi8v",
-                    "MTI3LjAuMC4xOjgwODAgaW5zdGFsbC1wbHVnaW4gZ2l0IC1kZXBsb3kiIGplbmtpbnMNCnN1ZG8gc3Ug",
-                    "LWMgImphdmEgLWphciAvdmFyL2NhY2hlL2plbmtpbnMvd2FyL1dFQi1JTkYvamVua2lucy1jbGkuamFy",
-                    "IC1zIGh0dHA6Ly8xMjcuMC4wLjE6ODA4MCBpbnN0YWxsLXBsdWdpbiBzc2gtY3JlZGVudGlhbHMiIGpl",
-                    "bmtpbnMNCnN1ZG8gc3UgLWMgImphdmEgLWphciAvdmFyL2NhY2hlL2plbmtpbnMvd2FyL1dFQi1JTkYv",
-                    "amVua2lucy1jbGkuamFyIC1zIGh0dHA6Ly8xMjcuMC4wLjE6ODA4MCBpbnN0YWxsLXBsdWdpbiBqb2It",
-                    "ZHNsIC1kZXBsb3kiIGplbmtpbnMNCg0KIyBDT05GSUdVUkUgQU5EIFJVTiAxU1QgU0VFRCBKT0IgKFdJ",
-                    "TEwgQ1JFQVRFIEFMTCBPVEhFUiBKT0JTIEZST00gUkVQTykNCnN1ZG8gc3UgLWMgIm1rZGlyIC1wIC92",
-                    "YXIvbGliL2plbmtpbnMvam9icy9zZWVkLWRzbCIgamVua2lucw0Kc3VkbyBzdSAtYyAibWtkaXIgLXAg",
-                    "L3Zhci9saWIvamVua2lucy93b3Jrc3BhY2Uvc2VlZC1kc2wvY29udHJvbGJveCIgamVua2lucw0Kc3Vk",
-                    "byBzdSAtYyAiZ2l0IGNsb25lIGh0dHBzOi8vYml0YnVja2V0Lm9yZy9yb25hYW5pbWF0aW9uL2NvbnRy",
-                    "b2xib3guZ2l0IC92YXIvbGliL2plbmtpbnMvd29ya3NwYWNlL3NlZWQtZHNsL2NvbnRyb2xib3giIGpl",
-                    "bmtpbnMNCnN1ZG8gc3UgLWMgImNwIC92YXIvbGliL2plbmtpbnMvd29ya3NwYWNlL3NlZWQtZHNsL2Nv",
-                    "bnRyb2xib3gvc2VlZC1kbHNfY29uZmlnLnhtbCAvdmFyL2xpYi9qZW5raW5zL2pvYnMvc2VlZC1kc2wv",
-                    "Y29uZmlnLnhtbCIgamVua2lucw0Kc3VkbyBzZXJ2aWNlIGplbmtpbnMgcmVzdGFydA0Kc3VkbyBzdSAt",
-                    "YyAidW50aWwgY3VybCAtc0wgLXcgJyV7aHR0cF9jb2RlfScgJ2h0dHA6Ly8xMjcuMC4wLjE6ODA4MC9j",
-                    "bGkvJyAtbyAvZGV2L251bGwgfCBncmVwIC1tIDEgJzIwMCc7IGRvIDogOyBkb25lIiBqZW5raW5zDQpz",
-                    "dWRvIHN1IC1jICJqYXZhIC1qYXIgL3Zhci9jYWNoZS9qZW5raW5zL3dhci9XRUItSU5GL2plbmtpbnMt",
-                    "Y2xpLmphciAtcyBodHRwOi8vMTI3LjAuMC4xOjgwODAgYnVpbGQgc2VlZC1kc2wiIGplbmtpbnM="
+                    "aXQNCiMgRnJvbSBVYnVudHUgdXNlcg0KIyBNYWl0YWluZWQgYnkgUGV0ZXIgU3R5ayAoZGV2b3BzZmFj",
+                    "dG9yeUBzdHlrLnR2KQ0KDQojIFBSRVJFUVVFU0lURVMNCnB1c2hkIC90bXANCiAgICBzdWRvIHdnZXQg",
+                    "LXEgLU8gLSBodHRwczovL2plbmtpbnMtY2kub3JnL2RlYmlhbi9qZW5raW5zLWNpLm9yZy5rZXkgfCBz",
+                    "dWRvIGFwdC1rZXkgYWRkIC0NCiAgICBzdWRvIHNoIC1jICdlY2hvIGRlYiBodHRwOi8vcGtnLmplbmtp",
+                    "bnMtY2kub3JnL2RlYmlhbi1zdGFibGUgYmluYXJ5LyA+IC9ldGMvYXB0L3NvdXJjZXMubGlzdC5kL2pl",
+                    "bmtpbnMubGlzdCcNCiAgICBzdWRvIGFwdC1nZXQgdXBkYXRlDQogICAgc3VkbyBhcHQtZ2V0IGluc3Rh",
+                    "bGwgb3Blbmpkay04LWpkayBnaXQgamVua2lucyAteQ0KICAgIHN1ZG8gZ3JvdXBhZGQgaGFiICYmIHVz",
+                    "ZXJhZGQgLWcgaGFiIC1zIC9iaW4vYmFzaCAtbSBoYWINCiAgICBzdWRvIGN1cmwgLWZzU0wgaHR0cHM6",
+                    "Ly9nZXQuZG9ja2VyLmNvbS8gfCBzaA0KICAgIHN1ZG8gdXNlcm1vZCAtYUcgZG9ja2VyIGplbmtpbnMN",
+                    "CiAgICBzdWRvIHVzZXJtb2QgLWFHIGRvY2tlciBoYWINCiAgICBzdWRvIGN1cmwgLUwgaHR0cHM6Ly9n",
+                    "aXRodWIuY29tL2RvY2tlci9jb21wb3NlL3JlbGVhc2VzL2Rvd25sb2FkLzEuNy4xL2RvY2tlci1jb21w",
+                    "b3NlLWB1bmFtZSAtc2AtYHVuYW1lIC1tYCA+IC91c3IvbG9jYWwvYmluL2RvY2tlci1jb21wb3NlDQog",
+                    "ICAgc3VkbyBjdXJsIC1zU2YgaHR0cHM6Ly9zdGF0aWMucnVzdC1sYW5nLm9yZy9ydXN0dXAuc2ggfCBz",
+                    "aA0KcG9wZA0KDQojIEhBQklUQVQNCnN1ZG8gc3UgLWMgIm1rZGlyIC1wIC92YXIvbGliL2plbmtpbnMv",
+                    "Z2l0L2hhYml0YXQiIGplbmtpbnMNCnN1ZG8gc3UgLWMgImdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5j",
+                    "b20vaGFiaXRhdC1zaC9oYWJpdGF0IC92YXIvbGliL2plbmtpbnMvZ2l0L2hhYml0YXQiIGplbmtpbnMN",
+                    "CnN1ZG8gIi92YXIvbGliL2plbmtpbnMvZ2l0L2hhYml0YXQvY29tcG9uZW50cy9oYWIvaW5zdGFsbC5z",
+                    "aCIgDQpzdWRvICIvdmFyL2xpYi9qZW5raW5zL2dpdC9oYWJpdGF0L3RlcnJhZm9ybS9zY3JpcHRzL2Jv",
+                    "b3RzdHJhcC5zaCIgDQoNCg0KIyBKRU5LSU5TIFBMVUdJTlMNCnN1ZG8gc3UgLWMgImphdmEgLWphciAv",
+                    "dmFyL2NhY2hlL2plbmtpbnMvd2FyL1dFQi1JTkYvamVua2lucy1jbGkuamFyIC1zIGh0dHA6Ly8xMjcu",
+                    "MC4wLjE6ODA4MCBpbnN0YWxsLXBsdWdpbiBnaXQgLWRlcGxveSIgamVua2lucw0Kc3VkbyBzdSAtYyAi",
+                    "amF2YSAtamFyIC92YXIvY2FjaGUvamVua2lucy93YXIvV0VCLUlORi9qZW5raW5zLWNsaS5qYXIgLXMg",
+                    "aHR0cDovLzEyNy4wLjAuMTo4MDgwIGluc3RhbGwtcGx1Z2luIHNzaC1jcmVkZW50aWFscyIgamVua2lu",
+                    "cw0Kc3VkbyBzdSAtYyAiamF2YSAtamFyIC92YXIvY2FjaGUvamVua2lucy93YXIvV0VCLUlORi9qZW5r",
+                    "aW5zLWNsaS5qYXIgLXMgaHR0cDovLzEyNy4wLjAuMTo4MDgwIGluc3RhbGwtcGx1Z2luIGpvYi1kc2wg",
+                    "LWRlcGxveSIgamVua2lucw0KDQojIENPTkZJR1VSRSBBTkQgUlVOIDFTVCBTRUVEIEpPQiAoV0lMTCBD",
+                    "UkVBVEUgQUxMIE9USEVSIEpPQlMgRlJPTSBSRVBPKQ0Kc3VkbyBzdSAtYyAibWtkaXIgLXAgL3Zhci9s",
+                    "aWIvamVua2lucy9qb2JzL3NlZWQtZHNsIiBqZW5raW5zDQpzdWRvIHN1IC1jICJta2RpciAtcCAvdmFy",
+                    "L2xpYi9qZW5raW5zL3dvcmtzcGFjZS9zZWVkLWRzbC9jb250cm9sYm94IiBqZW5raW5zDQpzdWRvIHN1",
+                    "IC1jICJnaXQgY2xvbmUgaHR0cHM6Ly9iaXRidWNrZXQub3JnL3JvbmFhbmltYXRpb24vY29udHJvbGJv",
+                    "eC5naXQgL3Zhci9saWIvamVua2lucy93b3Jrc3BhY2Uvc2VlZC1kc2wvY29udHJvbGJveCIgamVua2lu",
+                    "cw0Kc3VkbyBzdSAtYyAiY3AgL3Zhci9saWIvamVua2lucy93b3Jrc3BhY2Uvc2VlZC1kc2wvY29udHJv",
+                    "bGJveC9zZWVkLWRsc19jb25maWcueG1sIC92YXIvbGliL2plbmtpbnMvam9icy9zZWVkLWRzbC9jb25m",
+                    "aWcueG1sIiBqZW5raW5zDQpzdWRvIHNlcnZpY2UgamVua2lucyByZXN0YXJ0DQpzdWRvIHN1IC1jICJ1",
+                    "bnRpbCBjdXJsIC1zTCAtdyAnJXtodHRwX2NvZGV9JyAnaHR0cDovLzEyNy4wLjAuMTo4MDgwL2NsaS8n",
+                    "IC1vIC9kZXYvbnVsbCB8IGdyZXAgLW0gMSAnMjAwJzsgZG8gOiA7IGRvbmUiIGplbmtpbnMNCnN1ZG8g",
+                    "c3UgLWMgImphdmEgLWphciAvdmFyL2NhY2hlL2plbmtpbnMvd2FyL1dFQi1JTkYvamVua2lucy1jbGku",
+                    "amFyIC1zIGh0dHA6Ly8xMjcuMC4wLjE6ODA4MCBidWlsZCBzZWVkLWRzbCIgamVua2lucw0K"
                 ]]},
                 "NetworkInterfaces": [
                     {
