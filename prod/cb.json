@@ -26,13 +26,13 @@
     "Mappings": {
         "UbuntuXenialAMI": {
             "us-west-1": {
-                "AMI": "ami-f3064193"
+                "AMI": "ami-b20542d2"
             },
             "us-east-1": {
-                "AMI": "ami-32f43a5f"
+                "AMI": "ami-ddf13fb0"
             },
             "eu-west-1": {
-                "AMI": "ami-f8dd478b"
+                "AMI": "ami-a4d44ed7"
             }
         }
     },
