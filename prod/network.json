@@ -38,16 +38,16 @@
     }, 
     "df"     : {       
       "eu-west-1a" : {
-        "PublicNet" : "10.199.101.0/24",
-        "PrivateNet" : "10.199.201.0/24"
+        "PublicNet" : "10.99.101.0/24",
+        "PrivateNet" : "10.99.201.0/24"
       },        
       "eu-west-1b" : {
-        "PublicNet" : "10.199.102.0/24",
-        "PrivateNet" : "10.199.202.0/24"
+        "PublicNet" : "10.99.102.0/24",
+        "PrivateNet" : "10.99.202.0/24"
       },        
       "eu-west-1c" : {
-        "PublicNet" : "10.199.103.0/24",
-        "PrivateNet" : "10.199.203.0/24"                
+        "PublicNet" : "10.99.103.0/24",
+        "PrivateNet" : "10.99.203.0/24"                
       }                   
     } 
   },    
