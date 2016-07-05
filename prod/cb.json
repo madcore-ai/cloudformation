@@ -25,8 +25,14 @@
     },
     "Mappings": {
         "UbuntuXenialAMI": {
+            "us-west-1": {
+                "AMI": "ami-f3064193"
+            },
+            "us-east-1": {
+                "AMI": "ami-32f43a5f"
+            },
             "eu-west-1": {
-                "AMI": "ami-0ae77879"
+                "AMI": "ami-f8dd478b"
             }
         }
     },
