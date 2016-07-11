@@ -1,7 +1,7 @@
 #!/bin/bash -v
-# Ubuntu Trusty Initialization from Cloud-Init
+# Ubuntu Xenial Initialization from Cloud-Init or Vagrant
 # From Ubuntu user
-# Maitained by Peter Styk (devopsfactory@styk.tv)
+# Maintained by Peter Styk (devopsfactory@styk.tv)
 
 # PREREQUESITES
 pushd /tmp
@@ -25,6 +25,7 @@ sudo "/var/lib/jenkins/git/habitat/terraform/scripts/bootstrap.sh"
 
 
 # JENKINS PLUGINS
+sudo su -c "mv /var/lib/jenkins/config.xml /var/lib/jenkins/config.xml.old" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin git -deploy" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin ssh-credentials" jenkins
 sudo su -c "java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://127.0.0.1:8080 install-plugin job-dsl -deploy" jenkins
