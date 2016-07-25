@@ -5,10 +5,10 @@
   }, 
   {
     "ParameterKey": "FollowmeSecurityGroup",
-    "ParameterValue": "sg-181c8a7f"
+    "ParameterValue": "sg-7482ad0f"
   },
   {
     "ParameterKey": "PublicNetZoneA",
-    "ParameterValue": "subnet-fdf904a5"
+    "ParameterValue": "subnet-7f684627"
   }
 ]

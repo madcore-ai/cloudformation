@@ -40,17 +40,17 @@
       "eu-west-1a" : {
         "PublicNet" : "10.99.101.0/24",
         "PrivateNet" : "10.99.201.0/24"
-      },
+      },        
       "eu-west-1b" : {
         "PublicNet" : "10.99.102.0/24",
         "PrivateNet" : "10.99.202.0/24"
-      },
+      },        
       "eu-west-1c" : {
         "PublicNet" : "10.99.103.0/24",
-        "PrivateNet" : "10.99.203.0/24"
-      }
-    }
-  },
+        "PrivateNet" : "10.99.203.0/24"                
+      }                   
+    } 
+  },    
   "Resources": {  
     "VpcId" : {
       "Type" : "AWS::EC2::VPC",
