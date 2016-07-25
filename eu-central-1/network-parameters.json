@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "Type",
+    "ParameterValue": "Production"
+  }, 
+  {
+    "ParameterKey": "Env",
+    "ParameterValue": "df"
+  },
+  {
+    "ParameterKey": "VPCCIDRBlock",
+    "ParameterValue": "10.199.0.0/16"
+  }
+]
