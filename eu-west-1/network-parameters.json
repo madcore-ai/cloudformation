@@ -9,6 +9,6 @@
   },
   {
     "ParameterKey": "VPCCIDRBlock",
-    "ParameterValue": "10.199.0.0/16"
+    "ParameterValue": "10.99.0.0/16"
   }
 ]
