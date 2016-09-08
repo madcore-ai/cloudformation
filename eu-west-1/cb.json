@@ -160,6 +160,14 @@
                 ]
             }
         },
+        "ControlBoxPublicDnsName": {
+            "Value": {
+                "Fn::GetAtt": [
+                    "ControlBoxInstance",
+                    "PublicDnsName"
+                ]
+            }
+        },
         "ControlBoxInstanceId": {
             "Value": {
                 "Ref": "ControlBoxInstance"
