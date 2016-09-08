@@ -97,6 +97,20 @@
             }
         },
         
+        "ControlBoxEIP" : {
+          "Type" : "AWS::EC2::EIP",
+          "Properties" : {
+            "Domain" : "vpc"
+          }
+        },    
+        "ControlBoxEIPAssoc" : {
+          "Type" : "AWS::EC2::EIPAssociation",
+          "Properties" : {
+            "AllocationId" : { "Fn::GetAtt" : [ "ControlBoxEIP", "AllocationId"] },
+            "InstanceId" : { "Ref" : "ControlBoxInstance" }
+          }
+        },  
+        
         "IamDevopsFactoryRole": {
           "Type": "AWS::IAM::Role",
           "Properties": {
