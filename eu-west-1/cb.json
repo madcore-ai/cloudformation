@@ -50,6 +50,12 @@
                         "AMI"
                     ]
                 },
+                "BlockDeviceMappings" : [
+                    {
+                        "DeviceName" : "/dev/sda1",
+                        "Ebs" : { "VolumeSize" : "16" } 
+                    }
+                ],
                 "KeyName": {
                     "Ref": "KeyName"
                 },
