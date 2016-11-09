@@ -1,0 +1,26 @@
+products:
+    - id: madcore_small
+      type: internal
+      image: mcsm
+      text_invactive: Inactive
+      text_buy: $2.99
+      text_prerequesite: "Prerequesite missing"
+      text_active: Active
+      frame_color: blue
+    - id: bitbucket_oauth
+      type: internal
+      image: bitbucket
+      text_invactive: Inactive
+      text_buy: Build
+      text_prerequesite: "Prerequesite missing"
+      text_active: Active
+      frame_color: blue
+    - id: mesoesphere_cluster
+      type: cloudformation
+      image: dcos
+      text_invactive: Inactive
+      text_buy: Build
+      text_prerequesite: "Prerequesite missing"
+      text_active: Active
+      frame_color: blue
+
