@@ -10,7 +10,7 @@
 			"text_buy": "$2.99",
 			"text_invactive": "Inactive",
 			"text_prerequesite": "Prerequesite missing",
-			"frame_color": "blue"
+			"frame_color": "gold"
 		},
 		{
 			"id": "bitbucket_oauth",
