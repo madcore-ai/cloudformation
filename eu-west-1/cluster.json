@@ -145,6 +145,13 @@
               "SubnetId": {
                 "Ref": "PublicNetZoneA"
               },
+              "SecurityGroups": [
+                {
+                  "GroupId": {
+                    "Ref": "AutoScaleEC2SecurityGroup"
+                  }
+                }
+              ],
               "WeightedCapacity": "1"
             }
           ]
