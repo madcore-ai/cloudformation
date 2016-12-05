@@ -1,0 +1,169 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Madcore-Cluster Auto Scale",
+  "Parameters": {
+    "AutoScaleEC2SecurityGroup": {
+      "Type": "String",
+      "AllowedPattern": ".+",
+      "ConstraintDescription": "Must be valid security group name",
+      "Description": "The security group used for autoscale."
+    },
+    "SpotPrice": {
+      "Description": "Maximum spot price to bid in USD (e.g.: 0.32).",
+      "Default": "0.02",
+      "Type": "Number"
+    },
+    "InstanceType": {
+      "Description": "EC2 PV instance type (m3.medium, etc). Note: m1.small is not supported.",
+      "Type": "String",
+      "Default": "m3.medium",
+      "AllowedValues": [
+        "m3.medium",
+        "m4.xlarge"
+      ],
+      "ConstraintDescription": "Must be a valid EC2 PV instance type. Note: m1.small is not supported."
+    },
+    "PublicNetZoneA": {
+      "Type": "String",
+      "AllowedPattern": "subnet-[a-f0-9]{8}",
+      "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx",
+      "Description": "Madcore-Cluster Public Subnet Zone A"
+    }
+  },
+  "Mappings": {
+    "UbuntuXenialAMI": {
+      "us-west-1": {
+        "AMI": "ami-b20542d2"
+      },
+      "us-east-1": {
+        "AMI": "ami-ddf13fb0"
+      },
+      "eu-west-1": {
+        "AMI": "ami-a4d44ed7"
+      }
+    }
+  },
+  "Resources": {
+    "MadcoreClusterAutoScalingLaunchConfiguration": {
+      "Type": "AWS::AutoScaling::LaunchConfiguration",
+      "Properties": {
+        "ImageId": {
+          "Fn::FindInMap": [
+            "UbuntuXenialAMI",
+            {
+              "Ref": "AWS::Region"
+            },
+            "AMI"
+          ]
+        },
+        "SecurityGroups": [
+          {
+            "Ref": "AutoScaleEC2SecurityGroup"
+          }
+        ],
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "SpotPrice": {
+          "Ref": "SpotPrice"
+        },
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sdk",
+            "Ebs": {
+              "VolumeSize": "16"
+            }
+          }
+        ]
+      }
+    },
+    "MadcoreClusterAutoScalingServerGroup": {
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "Properties": {
+        "AvailabilityZones": {
+          "Fn::GetAZs": ""
+        },
+        "LaunchConfigurationName": {
+          "Ref": "MadcoreClusterAutoScalingLaunchConfiguration"
+        },
+        "MinSize": "1",
+        "MaxSize": "1",
+        "DesiredCapacity": "1"
+      }
+    },
+    "MadcoreClusterSpotFleetRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "spotfleet.amazonaws.com"
+                ]
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AmazonEC2SpotFleetRole"
+        ],
+        "Path": "/"
+      }
+    },
+    "MadcoreClusterSpotFleet": {
+      "Type": "AWS::EC2::SpotFleet",
+      "Properties": {
+        "SpotFleetRequestConfigData": {
+          "IamFleetRole": {
+            "Fn::GetAtt": [
+              "MadcoreClusterSpotFleetRole",
+              "Arn"
+            ]
+          },
+          "SpotPrice": {
+            "Ref": "SpotPrice"
+          },
+          "TargetCapacity": "1",
+          "LaunchSpecifications": [
+            {
+              "InstanceType": {
+                "Ref": "InstanceType"
+              },
+              "ImageId": {
+                "Fn::FindInMap": [
+                  "UbuntuXenialAMI",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  "AMI"
+                ]
+              },
+              "SubnetId": {
+                "Ref": "PublicNetZoneA"
+              },
+              "WeightedCapacity": "1"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "SpotPrice": {
+      "Description": "Instance sport price",
+      "Value": {
+        "Ref": "SpotPrice"
+      }
+    },
+    "InstanceType": {
+      "Description": "Instance type",
+      "Value": {
+        "Ref": "InstanceType"
+      }
+    }
+  }
+}

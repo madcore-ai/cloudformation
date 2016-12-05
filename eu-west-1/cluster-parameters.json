@@ -1,0 +1,18 @@
+[
+  {
+    "ParameterKey": "AutoScaleEC2SecurityGroup",
+    "ParameterValue": "sg-2a3a9c4c"
+  },
+  {
+    "ParameterKey": "InstanceType",
+    "ParameterValue": "m3.medium"
+  },
+  {
+    "ParameterKey": "SpotPrice",
+    "ParameterValue": "0.02"
+  },
+  {
+    "ParameterKey": "PublicNetZoneA",
+    "ParameterValue": "subnet-4b0a8113"
+  }
+]
