@@ -77,13 +77,14 @@
                     }
                 ],
                 "UserData" : { "Fn::Join" : ["", [
-			"IyEvYmluL2Jhc2ggLXYNCiMgRGV2b3BzIEZhY3RvcnkgUHJlIENvbmZpZ3VyZQ0KIyBNYWludGFpbmVk",
-			"IGJ5IFBldGVyIFN0eWsgKGRldm9wc2ZhY3RvcnlAc3R5ay50dikNCg0KIyBQUkVDT05GSUdVUkUgQ09O",
-			"VFJPTEJPWA0Kc3VkbyBhcHQtZ2V0IHVwZGF0ZQ0Kc3VkbyBhcHQtZ2V0IGluc3RhbGwgZ2l0IC15DQpz",
-			"dWRvIG1rZGlyIC1wIC9vcHQvY29udHJvbGJveA0Kc3VkbyBjaG93biB1YnVudHU6dWJ1bnR1IC9vcHQv",
-			"Y29udHJvbGJveA0KZ2l0IGNsb25lIGh0dHBzOi8vYml0YnVja2V0Lm9yZy9yb25hYW5pbWF0aW9uL2Nv",
-			"bnRyb2xib3guZ2l0IC9vcHQvY29udHJvbGJveA0Kc3VkbyBjaG1vZCAreCAvb3B0L2NvbnRyb2xib3gv",
-			"Y2ItaW5zdGFsbC5zaA0Kc3VkbyAiL29wdC9jb250cm9sYm94L2NiLWluc3RhbGwuc2gi"
+			"IyEvYmluL2Jhc2ggLXYNCiMgTWFkY29yZSBQcmUgQ29uZmlndXJlDQojIE1haW50YWluZWQgYnkgUGV0",
+			"ZXIgU3R5ayAoaHVtYW5zQG1hZGNvcmUuYWkpDQoNCnN1ZG8gZWNobyBFTlY9QVdTID4+IC9ldGMvZW52",
+			"aXJvbm1lbnQNCg0KIyBQUkVDT05GSUdVUkUgQ09OVFJPTEJPWA0Kc3VkbyBhcHQtZ2V0IHVwZGF0ZQ0K",
+			"c3VkbyBhcHQtZ2V0IGluc3RhbGwgZ2l0IC15DQpzdWRvIG1rZGlyIC1wIC9vcHQvY29udHJvbGJveA0K",
+			"c3VkbyBjaG93biB1YnVudHU6dWJ1bnR1IC9vcHQvY29udHJvbGJveA0KZ2l0IGNsb25lIGh0dHBzOi8v",
+			"Yml0YnVja2V0Lm9yZy9yb25hYW5pbWF0aW9uL2NvbnRyb2xib3guZ2l0IC9vcHQvY29udHJvbGJveA0K",
+			"c3VkbyBjaG1vZCAreCAvb3B0L2NvbnRyb2xib3gvY2ItaW5zdGFsbC5zaA0Kc3VkbyAiL29wdC9jb250",
+			"cm9sYm94L2NiLWluc3RhbGwuc2gi"
                 ]]},
                 "NetworkInterfaces": [
                     {
