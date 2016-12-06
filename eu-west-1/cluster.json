@@ -152,7 +152,8 @@
                   }
                 }
               ],
-              "WeightedCapacity": "1"
+              "WeightedCapacity": "1",
+              "KeyName": "madcore_cluster"
             }
           ]
         }
