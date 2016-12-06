@@ -1,7 +1,7 @@
 [
   {
     "ParameterKey": "AutoScaleEC2SecurityGroup",
-    "ParameterValue": "sg-2a3a9c4c"
+    "ParameterValue": "sg-51b53f37"
   },
   {
     "ParameterKey": "InstanceType",
@@ -13,6 +13,6 @@
   },
   {
     "ParameterKey": "PublicNetZoneA",
-    "ParameterValue": "subnet-4b0a8113"
+    "ParameterValue": "subnet-422db61a"
   }
 ]
