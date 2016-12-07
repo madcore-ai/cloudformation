@@ -17,16 +17,8 @@
       "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx",       
       "MaxLength": "15", 
       "MinLength": "1" 
-    },
-    "Nodes": {
-      "Type": "String",
-      "Description": "IP address of cluster nodes.",
-      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}",
-      "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx",
-      "MaxLength": "15",
-      "MinLength": "1"
     }
-  },    
+  },
   "Resources": {  
     "SecurityGroupDevopsfactoryFollowme" : {
       "Type" : "AWS::EC2::SecurityGroup",
@@ -39,12 +31,11 @@
         "SecurityGroupIngress" : [
           { "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  },
           { "IpProtocol" : "tcp", "FromPort" : "443", "ToPort" : "443", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  },
-          { "IpProtocol" : "tcp", "FromPort" : "8080", "ToPort" : "8080", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  },
-          { "IpProtocol" : "tcp", "FromPort" : "0", "ToPort" : "65535", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "Nodes"}, "/24"] ]}  }
+          { "IpProtocol" : "tcp", "FromPort" : "8080", "ToPort" : "8080", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  }
         ]
       }
-    }                          
-   },   
+    }
+   },
    "Outputs" : {
     "FollowmeSgId" : {
       "Description" : "Defops Factory Follow Me Security Group ID",

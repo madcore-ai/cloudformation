@@ -6,9 +6,5 @@
   {
     "ParameterKey": "FollowMeIpAddress",
     "ParameterValue": "81.145.238.131"
-  },
-  {
-    "ParameterKey": "Nodes",
-    "ParameterValue": "10.99.101.0"
   }
 ]

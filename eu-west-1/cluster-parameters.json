@@ -18,5 +18,9 @@
   {
     "ParameterKey": "NodesSubnet",
     "ParameterValue": "10.99.101.0"
+  },
+  {
+    "ParameterKey": "MasterIP",
+    "ParameterValue": "10.99.101.99"
   }
 ]
