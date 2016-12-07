@@ -2,11 +2,27 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Madcore-Cluster Auto Scale",
   "Parameters": {
-    "AutoScaleEC2SecurityGroup": {
+    "VpcId": {
       "Type": "String",
-      "AllowedPattern": ".+",
-      "ConstraintDescription": "Must be valid security group name",
-      "Description": "The security group used for autoscale."
+      "AllowedPattern": "vpc-[a-f0-9]{8}",
+      "ConstraintDescription": "Must be valid VPC identifier vpc-xxxxxxxx",
+      "Description": "The ID of the Devops Factory Virtual Private Network."
+    },
+    "NodesSubnet": {
+      "Type": "String",
+      "Description": "IP address of cluster nodes.",
+      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}",
+      "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx",
+      "MaxLength": "15",
+      "MinLength": "1"
+    },
+    "MasterIP": {
+      "Type": "String",
+      "Description": "Master IP of the cluster",
+      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}",
+      "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx",
+      "MaxLength": "15",
+      "MinLength": "1"
     },
     "SpotPrice": {
       "Description": "Maximum spot price to bid in USD (e.g.: 0.32).",
@@ -44,9 +60,43 @@
     }
   },
   "Resources": {
+    "MadcoreClusterSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Provides Madcore Cluster access",
+        "VpcId": {
+          "Ref": "VpcId"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "SG-madcore-cluster"
+          }
+        ],
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "0",
+            "ToPort": "65535",
+            "CidrIp": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Ref": "NodesSubnet"
+                  },
+                  "/24"
+                ]
+              ]
+            }
+          }
+        ]
+      }
+    },
     "MadcoreClusterAutoScalingLaunchConfiguration": {
       "Type": "AWS::AutoScaling::LaunchConfiguration",
       "Properties": {
+        "AssociatePublicIpAddress": true,
         "ImageId": {
           "Fn::FindInMap": [
             "UbuntuXenialAMI",
@@ -58,7 +108,7 @@
         },
         "SecurityGroups": [
           {
-            "Ref": "AutoScaleEC2SecurityGroup"
+            "Ref": "MadcoreClusterSecurityGroup"
           }
         ],
         "InstanceType": {
@@ -74,81 +124,54 @@
               "VolumeSize": "16"
             }
           }
-        ]
+        ],
+        "KeyName": "madcore_cluster",
+        "UserData": {
+          "Fn::Join": [
+            "",
+            [
+              "IyEvYmluL2Jhc2ggLXYNCiMgTWFkY29yZSBLdWJlcm5ldGVzIE5vZGUgUHJlIENvbmZpZ3VyZQ0KIyBNYWludGFpbmVkIGJ5IE1hZGNvcmUgTHRkIChodW1hbnNAbWFkY29yZS5haSkNCg0Kc3VkbyBlY2hvIEVOVj1BV1MgPj4gL2V0Yy9lbnZpcm9ubWVudA0KDQpLVUJfTUFTVEVSX0lQPSIke0tVQl9NQVNURVJfSVA6LTEwLjk5LjEwMS45OX0iDQoNCiMgUFJFQ09ORklHVVJFIENPTlRST0xCT1gNCnN1ZG8gYXB0LWdldCB1cGRhdGUNCnN1ZG8gYXB0LWdldCBpbnN0YWxsIGdpdCAteQ0Kc3VkbyBta2RpciAtcCAvb3B0L2NvbnRyb2xib3gNCnN1ZG8gY2hvd24gdWJ1bnR1OnVidW50dSAvb3B0L2NvbnRyb2xib3gNCmdpdCBjbG9uZSBodHRwczovL2JpdGJ1Y2tldC5vcmcvcm9uYWFuaW1hdGlvbi9jb250cm9sYm94LmdpdCAvb3B0L2NvbnRyb2xib3gNCg0Kc3VkbyBjaG1vZCAreCAvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0LnNoDQpzdWRvICIvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0LnNoIg0KDQpzdWRvIGNobW9kICt4IC9vcHQvY29udHJvbGJveC9rdWJlcm5ldGVzL2NsdXN0ZXIvbm9kZS1pbnN0YWxsLnNoDQpzdWRvICIvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL25vZGUtaW5zdGFsbC5zaCINCg"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "Comment1": "Configure the bootstrap helpers to setup cluster configs",
+        "AWS::CloudFormation::Init": {
+          "configSets": {
+            "ClusterConfig": [
+              "kub_cluster_config"
+            ]
+          },
+          "kub_cluster_config": {
+            "commands": {
+              "environment": {
+                "command": {"Fn::Join": ["", ["echo KUB_MASTER_IP=", {"Ref": "MasterIP"}," >> /etc/environment"]]},
+                "env": {
+                  "KUB_MASTER_IP": {
+                    "Ref": "MasterIP"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "MadcoreClusterAutoScalingServerGroup": {
       "Type": "AWS::AutoScaling::AutoScalingGroup",
       "Properties": {
-        "AvailabilityZones": {
-          "Fn::GetAZs": ""
-        },
         "LaunchConfigurationName": {
           "Ref": "MadcoreClusterAutoScalingLaunchConfiguration"
         },
-        "MinSize": "1",
+        "MinSize": "0",
         "MaxSize": "1",
-        "DesiredCapacity": "1"
-      }
-    },
-    "MadcoreClusterSpotFleetRole": {
-      "Type": "AWS::IAM::Role",
-      "Properties": {
-        "AssumeRolePolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal": {
-                "Service": [
-                  "spotfleet.amazonaws.com"
-                ]
-              },
-              "Action": "sts:AssumeRole"
-            }
-          ]
-        },
-        "ManagedPolicyArns": [
-          "arn:aws:iam::aws:policy/service-role/AmazonEC2SpotFleetRole"
-        ],
-        "Path": "/"
-      }
-    },
-    "MadcoreClusterSpotFleet": {
-      "Type": "AWS::EC2::SpotFleet",
-      "Properties": {
-        "SpotFleetRequestConfigData": {
-          "IamFleetRole": {
-            "Fn::GetAtt": [
-              "MadcoreClusterSpotFleetRole",
-              "Arn"
-            ]
-          },
-          "SpotPrice": {
-            "Ref": "SpotPrice"
-          },
-          "TargetCapacity": "1",
-          "LaunchSpecifications": [
-            {
-              "InstanceType": {
-                "Ref": "InstanceType"
-              },
-              "ImageId": {
-                "Fn::FindInMap": [
-                  "UbuntuXenialAMI",
-                  {
-                    "Ref": "AWS::Region"
-                  },
-                  "AMI"
-                ]
-              },
-              "SubnetId": {
-                "Ref": "PublicNetZoneA"
-              },
-              "WeightedCapacity": "1"
-            }
-          ]
-        }
+        "DesiredCapacity": "1",
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "PublicNetZoneA"
+          }
+        ]
       }
     }
   },
@@ -163,6 +186,12 @@
       "Description": "Instance type",
       "Value": {
         "Ref": "InstanceType"
+      }
+    },
+    "MadcoreClusterSecurityGroupId": {
+      "Description": "Madcore Cluster Security Group",
+      "Value": {
+        "Ref": "MadcoreClusterSecurityGroup"
       }
     }
   }

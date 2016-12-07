@@ -1,7 +1,7 @@
 [
   {
-    "ParameterKey": "AutoScaleEC2SecurityGroup",
-    "ParameterValue": "sg-2a3a9c4c"
+    "ParameterKey": "VpcId",
+    "ParameterValue": "vpc-64296a00"
   },
   {
     "ParameterKey": "InstanceType",
@@ -13,6 +13,14 @@
   },
   {
     "ParameterKey": "PublicNetZoneA",
-    "ParameterValue": "subnet-4b0a8113"
+    "ParameterValue": "subnet-422db61a"
+  },
+  {
+    "ParameterKey": "NodesSubnet",
+    "ParameterValue": "10.99.101.0"
+  },
+  {
+    "ParameterKey": "MasterIP",
+    "ParameterValue": "10.99.101.99"
   }
 ]
