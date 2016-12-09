@@ -2,11 +2,6 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Madcore-Cluster DNS setup",
   "Parameters": {
-    "HostedZoneName": {
-      "Type": "String",
-      "AllowedPattern": ".+",
-      "Description": "The name of the R53 zone name."
-    },
     "BaseDomainName": {
       "Type": "String",
       "AllowedPattern": ".+",
@@ -31,7 +26,7 @@
           "Comment": "Madcore hosted zone"
         },
         "Name": {
-          "Ref": "HostedZoneName"
+          "Ref": "BaseDomainName"
         }
       }
     },
@@ -39,7 +34,7 @@
       "Type": "AWS::Route53::RecordSet",
       "Properties": {
         "HostedZoneName": {
-          "Ref": "HostedZoneName"
+          "Ref": "BaseDomainName"
         },
         "Comment": "Madcore base subdomain DNS name.",
         "Name": {
@@ -68,7 +63,7 @@
       "Type": "AWS::Route53::RecordSetGroup",
       "Properties": {
         "HostedZoneName": {
-          "Ref": "HostedZoneName"
+          "Ref": "BaseDomainName"
         },
         "RecordSets": [
           {

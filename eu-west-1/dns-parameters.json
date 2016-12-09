@@ -1,9 +1,5 @@
 [
   {
-    "ParameterKey": "HostedZoneName",
-    "ParameterValue": "londondevops.com."
-  },
-  {
     "ParameterKey": "BaseDomainName",
     "ParameterValue": "londondevops.com."
   },
