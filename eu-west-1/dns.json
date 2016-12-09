@@ -19,7 +19,7 @@
     },
     "EC2Hostname": {
       "Type": "String",
-      "AllowedPattern": "ec2-.+?.compute.amazonaws.com",
+      "AllowedPattern": "ec2-.+?.amazonaws.com",
       "Description": "Host name of the EC2 instance."
     }
   },
