@@ -130,7 +130,18 @@
           "Fn::Join": [
             "",
             [
-              "IyEvYmluL2Jhc2ggLXYNCiMgTWFkY29yZSBLdWJlcm5ldGVzIE5vZGUgUHJlIENvbmZpZ3VyZQ0KIyBNYWludGFpbmVkIGJ5IE1hZGNvcmUgTHRkIChodW1hbnNAbWFkY29yZS5haSkNCg0Kc3VkbyBlY2hvIEVOVj1BV1MgPj4gL2V0Yy9lbnZpcm9ubWVudA0KDQpLVUJfTUFTVEVSX0lQPSIke0tVQl9NQVNURVJfSVA6LTEwLjk5LjEwMS45OX0iDQoNCiMgUFJFQ09ORklHVVJFIENPTlRST0xCT1gNCnN1ZG8gYXB0LWdldCB1cGRhdGUNCnN1ZG8gYXB0LWdldCBpbnN0YWxsIGdpdCAteQ0Kc3VkbyBta2RpciAtcCAvb3B0L2NvbnRyb2xib3gNCnN1ZG8gY2hvd24gdWJ1bnR1OnVidW50dSAvb3B0L2NvbnRyb2xib3gNCmdpdCBjbG9uZSBodHRwczovL2JpdGJ1Y2tldC5vcmcvcm9uYWFuaW1hdGlvbi9jb250cm9sYm94LmdpdCAvb3B0L2NvbnRyb2xib3gNCg0Kc3VkbyBjaG1vZCAreCAvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0LnNoDQpzdWRvICIvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0LnNoIg0KDQpzdWRvIGNobW9kICt4IC9vcHQvY29udHJvbGJveC9rdWJlcm5ldGVzL2NsdXN0ZXIvbm9kZS1pbnN0YWxsLnNoDQpzdWRvICIvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL25vZGUtaW5zdGFsbC5zaCINCg=="
+              "IyEvYmluL2Jhc2ggLXYNCiMgTWFkY29yZSBLdWJlcm5ldGVzIE5vZGUgUHJlIENvbmZpZ3VyZQ0KIyBN",
+              "YWludGFpbmVkIGJ5IE1hZGNvcmUgTHRkIChodW1hbnNAbWFkY29yZS5haSkNCg0Kc3VkbyBlY2hvIEVO",
+              "Vj1BV1MgPj4gL2V0Yy9lbnZpcm9ubWVudA0KDQpLVUJfTUFTVEVSX0lQPSIke0tVQl9NQVNURVJfSVA6",
+              "LTEwLjk5LjEwMS45OX0iDQoNCiMgUFJFQ09ORklHVVJFIENPTlRST0xCT1gNCnN1ZG8gYXB0LWdldCB1",
+              "cGRhdGUNCnN1ZG8gYXB0LWdldCBpbnN0YWxsIGdpdCAteQ0Kc3VkbyBta2RpciAtcCAvb3B0L2NvbnRy",
+              "b2xib3gNCnN1ZG8gY2hvd24gdWJ1bnR1OnVidW50dSAvb3B0L2NvbnRyb2xib3gNCmdpdCBjbG9uZSBo",
+              "dHRwczovL2JpdGJ1Y2tldC5vcmcvcm9uYWFuaW1hdGlvbi9jb250cm9sYm94LmdpdCAvb3B0L2NvbnRy",
+              "b2xib3gNCg0Kc3VkbyBjaG1vZCAreCAvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL2Nm",
+              "bi1pbml0LnNoDQpzdWRvICIvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0",
+              "LnNoIg0KDQpzdWRvIGNobW9kICt4IC9vcHQvY29udHJvbGJveC9rdWJlcm5ldGVzL2NsdXN0ZXIvbm9k",
+              "ZS1pbnN0YWxsLnNoDQpzdWRvICIvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL25vZGUt",
+              "aW5zdGFsbC5zaCINCg=="
             ]
           ]
         }
@@ -146,7 +157,18 @@
           "kub_cluster_config": {
             "commands": {
               "environment": {
-                "command": {"Fn::Join": ["", ["echo KUB_MASTER_IP=", {"Ref": "MasterIP"}," >> /etc/environment"]]},
+                "command": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "echo KUB_MASTER_IP=",
+                      {
+                        "Ref": "MasterIP"
+                      },
+                      " >> /etc/environment"
+                    ]
+                  ]
+                },
                 "env": {
                   "KUB_MASTER_IP": {
                     "Ref": "MasterIP"
