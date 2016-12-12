@@ -1,14 +1,14 @@
 [
   {
     "ParameterKey": "KeyName",
-    "ParameterValue": "mac2"
+    "ParameterValue": "chirgeo"
   }, 
   {
     "ParameterKey": "FollowmeSecurityGroup",
-    "ParameterValue": "sg-f2cf0494"
+    "ParameterValue": "sg-51b53f37"
   },
   {
     "ParameterKey": "PublicNetZoneA",
-    "ParameterValue": "subnet-701f9c28"
+    "ParameterValue": "subnet-422db61a"
   }
 ]
