@@ -6,7 +6,7 @@
       "Type": "String",
       "AllowedPattern": "vpc-[a-f0-9]{8}",
       "ConstraintDescription": "Must be valid VPC identifier vpc-xxxxxxxx",
-      "Description": "The ID of the Devops Factory Virtual Private Network."
+      "Description": "The ID of the MadCore Virtual Private Network."
     },
     "NodesSubnet": {
       "Type": "String",
@@ -133,15 +133,14 @@
               "IyEvYmluL2Jhc2ggLXYNCiMgTWFkY29yZSBLdWJlcm5ldGVzIE5vZGUgUHJlIENvbmZpZ3VyZQ0KIyBN",
               "YWludGFpbmVkIGJ5IE1hZGNvcmUgTHRkIChodW1hbnNAbWFkY29yZS5haSkNCg0Kc3VkbyBlY2hvIEVO",
               "Vj1BV1MgPj4gL2V0Yy9lbnZpcm9ubWVudA0KDQpLVUJfTUFTVEVSX0lQPSIke0tVQl9NQVNURVJfSVA6",
-              "LTEwLjk5LjEwMS45OX0iDQoNCiMgUFJFQ09ORklHVVJFIENPTlRST0xCT1gNCnN1ZG8gYXB0LWdldCB1",
-              "cGRhdGUNCnN1ZG8gYXB0LWdldCBpbnN0YWxsIGdpdCAteQ0Kc3VkbyBta2RpciAtcCAvb3B0L2NvbnRy",
-              "b2xib3gNCnN1ZG8gY2hvd24gdWJ1bnR1OnVidW50dSAvb3B0L2NvbnRyb2xib3gNCmdpdCBjbG9uZSBo",
-              "dHRwczovL2JpdGJ1Y2tldC5vcmcvcm9uYWFuaW1hdGlvbi9jb250cm9sYm94LmdpdCAvb3B0L2NvbnRy",
-              "b2xib3gNCg0Kc3VkbyBjaG1vZCAreCAvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL2Nm",
-              "bi1pbml0LnNoDQpzdWRvICIvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0",
-              "LnNoIg0KDQpzdWRvIGNobW9kICt4IC9vcHQvY29udHJvbGJveC9rdWJlcm5ldGVzL2NsdXN0ZXIvbm9k",
-              "ZS1pbnN0YWxsLnNoDQpzdWRvICIvb3B0L2NvbnRyb2xib3gva3ViZXJuZXRlcy9jbHVzdGVyL25vZGUt",
-              "aW5zdGFsbC5zaCINCg=="
+              "LTEwLjk5LjEwMS45OX0iDQoNCiMgUFJFQ09ORklHVVJFIG1hZGNvcmUNCnN1ZG8gYXB0LWdldCB1cGRh",
+              "dGUNCnN1ZG8gYXB0LWdldCBpbnN0YWxsIGdpdCAteQ0Kc3VkbyBta2RpciAtcCAvb3B0L21hZGNvcmUN",
+              "CnN1ZG8gY2hvd24gdWJ1bnR1OnVidW50dSAvb3B0L21hZGNvcmUNCmdpdCBjbG9uZSBodHRwczovL2dp",
+              "dGh1Yi5jb20vbWFkY29yZS1haS9jb3JlLmdpdCAvb3B0L21hZGNvcmUNCg0Kc3VkbyBjaG1vZCAreCAv",
+              "b3B0L21hZGNvcmUva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0LnNoDQpzdWRvICIvb3B0L21hZGNv",
+              "cmUva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0LnNoIg0KDQpzdWRvIGNobW9kICt4IC9vcHQvbWFk",
+              "Y29yZS9rdWJlcm5ldGVzL2NsdXN0ZXIvbm9kZS1pbnN0YWxsLnNoDQpzdWRvICIvb3B0L21hZGNvcmUv",
+              "a3ViZXJuZXRlcy9jbHVzdGVyL25vZGUtaW5zdGFsbC5zaCINCg=="
             ]
           ]
         }

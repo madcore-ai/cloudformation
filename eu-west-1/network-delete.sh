@@ -1,1 +1,2 @@
-aws cloudformation delete-stack --stack-name DF-Net --debug
+#!/usr/bin/env bash
+aws cloudformation delete-stack --stack-name MADCORE-Net --debug

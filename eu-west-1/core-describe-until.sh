@@ -1,5 +1,5 @@
 while (/usr/bin/true); do
-  OUTPUT=`bash cb-describe.sh | grep StackStatus`
+  OUTPUT=`bash core-describe.sh | grep StackStatus`
   if [[ $OUTPUT =~ .*_COMPLETE.* ]]; then
     echo $OUTPUT
     break
