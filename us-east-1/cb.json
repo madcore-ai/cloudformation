@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Devops Factory Control Box, Ubuntu Xenial Base plus tools like Jenkins, Habitat, Docker, HAProxy, SSL Self-generated cert.",
+    "Description": "MadCore Control Box, Ubuntu Xenial Base plus tools like Jenkins, Habitat, Docker, HAProxy, SSL Self-generated cert.",
     "Parameters": {
         "KeyName": {
             "Type": "String",
@@ -14,13 +14,13 @@
             "Type": "String",
             "AllowedPattern": "sg-[a-f0-9]{8}",
             "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx",
-            "Description": "Devops Factory Follow Me Security Group"
+            "Description": "MadCore Follow Me Security Group"
         },
         "PublicNetZoneA": {
             "Type": "String",
             "AllowedPattern": "subnet-[a-f0-9]{8}",
             "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx",
-            "Description": "Devops Factory Public Subnet Zone A"
+            "Description": "MadCore Public Subnet Zone A"
         }
     },
     "Mappings": {
@@ -53,7 +53,7 @@
                 "KeyName": {
                     "Ref": "KeyName"
                 },
-                "IamInstanceProfile" : { "Ref" : "IamDevopsFactoryInstanceProfile" },
+                "IamInstanceProfile" : { "Ref" : "IamMadCoreInstanceProfile" },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -131,7 +131,7 @@
             }
         },
         
-        "IamDevopsFactoryRole": {
+        "IamMadCoreRole": {
           "Type": "AWS::IAM::Role",
           "Properties": {
             "AssumeRolePolicyDocument": {
@@ -161,11 +161,11 @@
           }
         },
         
-        "IamDevopsFactoryInstanceProfile": {
+        "IamMadCoreInstanceProfile": {
           "Type": "AWS::IAM::InstanceProfile",
           "Properties": {
             "Path": "/",
-            "Roles": [ { "Ref": "IamDevopsFactoryRole" } ]
+            "Roles": [ { "Ref": "IamMadCoreRole" } ]
           }
         }     
         

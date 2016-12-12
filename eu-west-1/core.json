@@ -62,7 +62,7 @@
           "Ref": "KeyName"
         },
         "IamInstanceProfile": {
-          "Ref": "IamDevopsFactoryInstanceProfile"
+          "Ref": "IamMadCoreInstanceProfile"
         },
         "Tags": [
           {
@@ -132,7 +132,7 @@
         }
       }
     },
-    "IamDevopsFactoryRole": {
+    "IamMadCoreRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -173,13 +173,13 @@
         ]
       }
     },
-    "IamDevopsFactoryInstanceProfile": {
+    "IamMadCoreInstanceProfile": {
       "Type": "AWS::IAM::InstanceProfile",
       "Properties": {
         "Path": "/",
         "Roles": [
           {
-            "Ref": "IamDevopsFactoryRole"
+            "Ref": "IamMadCoreRole"
           }
         ]
       }

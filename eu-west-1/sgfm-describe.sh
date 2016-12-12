@@ -1,1 +1,2 @@
-aws cloudformation describe-stacks --stack-name DF-FollowMe
+#!/usr/bin/env bash
+aws cloudformation describe-stacks --stack-name MADCORE-FollowMe

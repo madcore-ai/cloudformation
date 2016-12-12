@@ -1,1 +1,2 @@
-aws cloudformation describe-stacks --stack-name DF-Net
+#!/usr/bin/env bash
+aws cloudformation describe-stacks --stack-name MADCORE-Net

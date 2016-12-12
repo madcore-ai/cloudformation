@@ -1,14 +1,14 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
   
-  "Description" : "DevopsFactory Security Group Stack. Provisions: Follow Me Security Group",
+  "Description" : "MadCore Security Group Stack. Provisions: Follow Me Security Group",
   
   "Parameters" : {
     "VpcId" : {
       "Type" : "String",
       "AllowedPattern": "vpc-[a-f0-9]{8}",
       "ConstraintDescription": "Must be valid VPC identifier vpc-xxxxxxxx", 
-      "Description": "The ID of the Devops Factory Virtual Private Network."
+      "Description": "The ID of the MadCore Virtual Private Network."
     },
     "FollowMeIpAddress": {
       "Type": "String",
@@ -20,13 +20,13 @@
     }    
   },    
   "Resources": {  
-    "SecurityGroupDevopsfactoryFollowme" : {
+    "SecurityGroupMadCoreFollowme" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "Properties" : {
-        "GroupDescription" : "Provides Devops Factory Android App user access to control instances",
+        "GroupDescription" : "Provides MadCore Android App user access to control instances",
         "VpcId" : {"Ref" : "VpcId"},
         "Tags" : [
-          { "Key" : "Name", "Value" : "SG-devopsfactory-followmeame" }                        
+          { "Key" : "Name", "Value" : "SG-MadCore-followmeame" }                        
         ],                
         "SecurityGroupIngress" : [
           { "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  },
@@ -38,8 +38,8 @@
    },   
    "Outputs" : {
     "FollowmeSgId" : {
-      "Description" : "Defops Factory Follow Me Security Group ID",
-      "Value" : {"Ref" : "SecurityGroupDevopsfactoryFollowme" }
+      "Description" : "MadCore Follow Me Security Group ID",
+      "Value" : {"Ref" : "SecurityGroupMadCoreFollowme" }
     }
    }
    

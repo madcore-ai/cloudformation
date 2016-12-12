@@ -6,7 +6,7 @@
       "Type": "String",
       "AllowedPattern": "vpc-[a-f0-9]{8}",
       "ConstraintDescription": "Must be valid VPC identifier vpc-xxxxxxxx",
-      "Description": "The ID of the Devops Factory Virtual Private Network."
+      "Description": "The ID of the MadCore Virtual Private Network."
     },
     "NodesSubnet": {
       "Type": "String",

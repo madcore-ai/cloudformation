@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-aws cloudformation describe-stacks --stack-name Madcore-Cluster
+aws cloudformation describe-stacks --stack-name MADCORE-Cluster
