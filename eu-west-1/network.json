@@ -13,9 +13,9 @@
     },
     "Env" : {
       "Type" : "String",
-      "AllowedValues" : ["df"],
-      "Default" : "df",
-      "Description" : "The Environment type to provision e.g. df.",
+      "AllowedValues" : ["madcore"],
+      "Default" : "madcore",
+      "Description" : "The Environment type to provision e.g. madcore.",
       "ConstraintDescription" : "Specify an environment to provision e.g. dev for development environment."
     }, 
     "VPCCIDRBlock": {
@@ -32,11 +32,11 @@
   },
   "Mappings": { 
     "EnvCodeMap"     : {       
-      "df" : {
-        "LongName" : "DF"
+      "madcore" : {
+        "LongName" : "MADCORE"
       }
     }, 
-    "df"     : {       
+    "madcore"     : {
       "eu-west-1a" : {
         "PublicNet" : "10.99.101.0/24",
         "PrivateNet" : "10.99.201.0/24"

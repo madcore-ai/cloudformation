@@ -1,19 +1,19 @@
 [
   {
     "ParameterKey": "VpcId",
-    "ParameterValue": "vpc-64296a00"
+    "ParameterValue": "vpc-631a5407"
   },
   {
     "ParameterKey": "InstanceType",
-    "ParameterValue": "m3.medium"
+    "ParameterValue": "r3.large"
   },
   {
     "ParameterKey": "SpotPrice",
-    "ParameterValue": "0.02"
+    "ParameterValue": "0.05"
   },
   {
     "ParameterKey": "PublicNetZoneA",
-    "ParameterValue": "subnet-422db61a"
+    "ParameterValue": "subnet-4614721e"
   },
   {
     "ParameterKey": "NodesSubnet",
@@ -21,6 +21,6 @@
   },
   {
     "ParameterKey": "MasterIP",
-    "ParameterValue": "10.99.101.70"
+    "ParameterValue": "10.99.101.94"
   }
 ]

@@ -10,6 +10,18 @@
       "AllowedPattern": "[-_ a-zA-Z0-9]*",
       "ConstraintDescription": "Must contain only alphanumeric characters, spaces, dashes and underscores."
     },
+    "InstanceType": {
+      "Description": "EC2 PV instance type (m3.medium, etc). Note: m1.small is not supported.",
+      "Type": "String",
+      "Default": "t2.small",
+      "AllowedValues": [
+        "t2.small",
+        "m3.medium",
+        "m4.large",
+        "r3.large"
+      ],
+      "ConstraintDescription": "Must be a valid EC2 PV instance type. Note: m1.small is not supported."
+    },
     "FollowmeSecurityGroup": {
       "Type": "String",
       "AllowedPattern": "sg-[a-f0-9]{8}",
@@ -40,7 +52,7 @@
     "MadCoreInstance": {
       "Type": "AWS::EC2::Instance",
       "Properties": {
-        "InstanceType": "t2.small",
+        "InstanceType": {"Ref": "InstanceType"},
         "ImageId": {
           "Fn::FindInMap": [
             "UbuntuXenialAMI",
@@ -84,14 +96,14 @@
           "Fn::Join": [
             "",
             [
-              "DQojIS9iaW4vYmFzaCAtdg0KIyAgMjAxNiBNYWRjb3JlIEx0ZCAoYykNCiMgTWFpbnRhaW5lZCBieSBQ",
-              "ZXRlciBTdHlrIChkZXZvcHNmYWN0b3J5QHN0eWsudHYpDQoNCnN1ZG8gZWNobyBFTlY9QVdTID4+IC9l",
-              "dGMvZW52aXJvbm1lbnQNCg0KIyBQUkVDT05GSUdVUkUgbWFkY29yZQ0Kc3VkbyBhcHQtZ2V0IHVwZGF0",
-              "ZQ0Kc3VkbyBhcHQtZ2V0IGluc3RhbGwgZ2l0IC15DQpzdWRvIG1rZGlyIC1wIC9vcHQvbWFkY29yZQ0K",
-              "c3VkbyBjaG93biB1YnVudHU6dWJ1bnR1IC9vcHQvbWFkY29yZQ0KZ2l0IGNsb25lIGh0dHBzOi8vZ2l0",
-              "aHViLmNvbS9tYWRjb3JlLWFpL2NvcmUuZ2l0IC9vcHQvbWFkY29yZQ0Kc3VkbyBjaG1vZCAreCAvb3B0",
-              "L21hZGNvcmUvY29yZS1pbnN0YWxsLnNoDQpzdWRvICIvb3B0L21hZGNvcmUvY29yZS1pbnN0YWxsLnNo",
-              "Ig0K"
+              "IyEvYmluL2Jhc2ggLXYNCiMgIDIwMTYgTWFkY29yZSBMdGQgKGMpDQojIE1haW50YWluZWQgYnkgUGV0",
+              "ZXIgU3R5ayAoZGV2b3BzZmFjdG9yeUBzdHlrLnR2KQ0KDQpzdWRvIGVjaG8gRU5WPUFXUyA+PiAvZXRj",
+              "L2Vudmlyb25tZW50DQoNCiMgUFJFQ09ORklHVVJFIG1hZGNvcmUNCnN1ZG8gYXB0LWdldCB1cGRhdGUN",
+              "CnN1ZG8gYXB0LWdldCBpbnN0YWxsIGdpdCAteQ0Kc3VkbyBta2RpciAtcCAvb3B0L21hZGNvcmUNCnN1",
+              "ZG8gY2hvd24gdWJ1bnR1OnVidW50dSAvb3B0L21hZGNvcmUNCmdpdCBjbG9uZSBodHRwczovL2dpdGh1",
+              "Yi5jb20vbWFkY29yZS1haS9jb3JlLmdpdCAvb3B0L21hZGNvcmUNCnN1ZG8gY2htb2QgK3ggL29wdC9t",
+              "YWRjb3JlL2NvcmUtaW5zdGFsbC5zaA0Kc3VkbyAiL29wdC9tYWRjb3JlL2NvcmUtaW5zdGFsbC5zaCIN",
+              "Cg=="
             ]
           ]
         },
