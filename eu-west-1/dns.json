@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Madcore-Cluster DNS setup",
+  "Description": "Madcore Dns Delegation Setup",
   "Parameters": {
     "BaseDomainName": {
       "Type": "String",
@@ -12,10 +12,13 @@
       "AllowedPattern": ".+",
       "Description": "Base subdomain name"
     },
-    "EC2Hostname": {
+    "EC2PublicIP": {
       "Type": "String",
-      "AllowedPattern": "ec2-.+?.amazonaws.com",
-      "Description": "Host name of the EC2 instance."
+      "Description": "EC2 instance public IP",
+      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}",
+      "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx",
+      "MaxLength": "15",
+      "MinLength": "1"
     }
   },
   "Resources": {
@@ -26,17 +29,28 @@
           "Comment": "Madcore hosted zone"
         },
         "Name": {
-          "Ref": "BaseDomainName"
+          "Fn::Join": [
+            ".",
+            [
+              {
+                "Ref": "BaseSubDomainName"
+              },
+              {
+                "Ref": "BaseDomainName"
+              },
+              ""
+            ]
+          ]
         }
       }
     },
-    "MadcoreRecordSet": {
+    "MadcoreEC2RecordSet": {
       "Type": "AWS::Route53::RecordSet",
       "Properties": {
         "HostedZoneId": {
           "Ref": "MadcoreDNSHostedZone"
         },
-        "Comment": "Madcore base subdomain DNS name.",
+        "Comment": "EC2 instance type",
         "Name": {
           "Fn::Join": [
             ".",
@@ -50,11 +64,11 @@
             ]
           ]
         },
-        "Type": "CNAME",
+        "Type": "A",
         "TTL": "300",
         "ResourceRecords": [
           {
-            "Ref": "EC2Hostname"
+            "Ref": "EC2PublicIP"
           }
         ]
       }
@@ -71,29 +85,12 @@
               "Fn::Join": [
                 ".",
                 [
-                  "flasker",
-                  {
-                    "Ref": "MadcoreRecordSet"
-                  }
-                ]
-              ]
-            },
-            "Type": "CNAME",
-            "TTL": "300",
-            "ResourceRecords": [
-              {
-                "Ref": "MadcoreRecordSet"
-              }
-            ]
-          },
-          {
-            "Name": {
-              "Fn::Join": [
-                ".",
-                [
                   "grafana",
                   {
-                    "Ref": "MadcoreRecordSet"
+                    "Ref": "BaseSubDomainName"
+                  },
+                  {
+                    "Ref": "BaseDomainName"
                   }
                 ]
               ]
@@ -102,7 +99,17 @@
             "TTL": "300",
             "ResourceRecords": [
               {
-                "Ref": "MadcoreRecordSet"
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "BaseSubDomainName"
+                    },
+                    {
+                      "Ref": "BaseDomainName"
+                    }
+                  ]
+                ]
               }
             ]
           },
@@ -113,7 +120,10 @@
                 [
                   "influxdb",
                   {
-                    "Ref": "MadcoreRecordSet"
+                    "Ref": "BaseSubDomainName"
+                  },
+                  {
+                    "Ref": "BaseDomainName"
                   }
                 ]
               ]
@@ -122,7 +132,17 @@
             "TTL": "300",
             "ResourceRecords": [
               {
-                "Ref": "MadcoreRecordSet"
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "BaseSubDomainName"
+                    },
+                    {
+                      "Ref": "BaseDomainName"
+                    }
+                  ]
+                ]
               }
             ]
           },
@@ -133,27 +153,10 @@
                 [
                   "registry",
                   {
-                    "Ref": "MadcoreRecordSet"
-                  }
-                ]
-              ]
-            },
-            "Type": "CNAME",
-            "TTL": "300",
-            "ResourceRecords": [
-              {
-                "Ref": "MadcoreRecordSet"
-              }
-            ]
-          },
-          {
-            "Name": {
-              "Fn::Join": [
-                ".",
-                [
-                  "wordpress",
+                    "Ref": "BaseSubDomainName"
+                  },
                   {
-                    "Ref": "MadcoreRecordSet"
+                    "Ref": "BaseDomainName"
                   }
                 ]
               ]
@@ -162,27 +165,17 @@
             "TTL": "300",
             "ResourceRecords": [
               {
-                "Ref": "MadcoreRecordSet"
-              }
-            ]
-          },
-          {
-            "Name": {
-              "Fn::Join": [
-                ".",
-                [
-                  "controlbox",
-                  {
-                    "Ref": "MadcoreRecordSet"
-                  }
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "BaseSubDomainName"
+                    },
+                    {
+                      "Ref": "BaseDomainName"
+                    }
+                  ]
                 ]
-              ]
-            },
-            "Type": "CNAME",
-            "TTL": "300",
-            "ResourceRecords": [
-              {
-                "Ref": "MadcoreRecordSet"
               }
             ]
           },
@@ -193,7 +186,10 @@
                 [
                   "jenkins",
                   {
-                    "Ref": "MadcoreRecordSet"
+                    "Ref": "BaseSubDomainName"
+                  },
+                  {
+                    "Ref": "BaseDomainName"
                   }
                 ]
               ]
@@ -202,7 +198,17 @@
             "TTL": "300",
             "ResourceRecords": [
               {
-                "Ref": "MadcoreRecordSet"
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "BaseSubDomainName"
+                    },
+                    {
+                      "Ref": "BaseDomainName"
+                    }
+                  ]
+                ]
               }
             ]
           },
@@ -213,7 +219,10 @@
                 [
                   "kubeapi",
                   {
-                    "Ref": "MadcoreRecordSet"
+                    "Ref": "BaseSubDomainName"
+                  },
+                  {
+                    "Ref": "BaseDomainName"
                   }
                 ]
               ]
@@ -222,7 +231,17 @@
             "TTL": "300",
             "ResourceRecords": [
               {
-                "Ref": "MadcoreRecordSet"
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "BaseSubDomainName"
+                    },
+                    {
+                      "Ref": "BaseDomainName"
+                    }
+                  ]
+                ]
               }
             ]
           },
@@ -233,7 +252,10 @@
                 [
                   "kubedash",
                   {
-                    "Ref": "MadcoreRecordSet"
+                    "Ref": "BaseSubDomainName"
+                  },
+                  {
+                    "Ref": "BaseDomainName"
                   }
                 ]
               ]
@@ -242,7 +264,17 @@
             "TTL": "300",
             "ResourceRecords": [
               {
-                "Ref": "MadcoreRecordSet"
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "BaseSubDomainName"
+                    },
+                    {
+                      "Ref": "BaseDomainName"
+                    }
+                  ]
+                ]
               }
             ]
           }
@@ -253,6 +285,12 @@
   "Outputs": {
     "HostedZoneID": {
       "Description": "Hosted Zone ID",
+      "Value": {
+        "Ref": "MadcoreDNSHostedZone"
+      }
+    },
+    "MadcoreDNSHostedZoneName": {
+      "Description": "Hosted Zone Name",
       "Value": {
         "Ref": "MadcoreDNSHostedZone"
       }

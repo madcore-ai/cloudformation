@@ -1,14 +1,14 @@
 [
   {
     "ParameterKey": "BaseDomainName",
-    "ParameterValue": "londondevops.com."
+    "ParameterValue": "madcore.cloud"
   },
   {
     "ParameterKey": "BaseSubDomainName",
-    "ParameterValue": "george"
+    "ParameterValue": "geo"
   },
   {
-    "ParameterKey": "EC2Hostname",
-    "ParameterValue": "ec2-52-214-32-200.eu-west-1.compute.amazonaws.com"
+    "ParameterKey": "EC2PublicIP",
+    "ParameterValue": "52.48.228.200"
   }
 ]
