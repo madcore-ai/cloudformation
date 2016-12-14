@@ -1,10 +1,10 @@
 [
   {
-    "ParameterKey": "BaseDomainName",
+    "ParameterKey": "DomainName",
     "ParameterValue": "madcore.cloud"
   },
   {
-    "ParameterKey": "BaseSubDomainName",
+    "ParameterKey": "SubDomainName",
     "ParameterValue": "geo"
   },
   {

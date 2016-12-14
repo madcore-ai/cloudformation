@@ -16,7 +16,7 @@
     "ParameterValue": "subnet-1c2a4b44"
   },
   {
-    "ParameterKey": "NodesSubnet",
+    "ParameterKey": "ClusterSubnetId",
     "ParameterValue": "10.99.101.0/24"
   },
   {

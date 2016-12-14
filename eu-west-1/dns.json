@@ -2,15 +2,15 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Madcore Dns Delegation Setup",
   "Parameters": {
-    "BaseDomainName": {
+    "DomainName": {
       "Type": "String",
       "AllowedPattern": ".+",
-      "Description": "Base domain name"
+      "Description": "Domain name"
     },
-    "BaseSubDomainName": {
+    "SubDomainName": {
       "Type": "String",
       "AllowedPattern": ".+",
-      "Description": "Base subdomain name"
+      "Description": "Subdomain name"
     },
     "EC2PublicIP": {
       "Type": "String",
@@ -33,10 +33,10 @@
             ".",
             [
               {
-                "Ref": "BaseSubDomainName"
+                "Ref": "SubDomainName"
               },
               {
-                "Ref": "BaseDomainName"
+                "Ref": "DomainName"
               },
               ""
             ]
@@ -56,10 +56,10 @@
             ".",
             [
               {
-                "Ref": "BaseSubDomainName"
+                "Ref": "SubDomainName"
               },
               {
-                "Ref": "BaseDomainName"
+                "Ref": "DomainName"
               }
             ]
           ]
@@ -87,10 +87,10 @@
                 [
                   "grafana",
                   {
-                    "Ref": "BaseSubDomainName"
+                    "Ref": "SubDomainName"
                   },
                   {
-                    "Ref": "BaseDomainName"
+                    "Ref": "DomainName"
                   }
                 ]
               ]
@@ -103,10 +103,10 @@
                   ".",
                   [
                     {
-                      "Ref": "BaseSubDomainName"
+                      "Ref": "SubDomainName"
                     },
                     {
-                      "Ref": "BaseDomainName"
+                      "Ref": "DomainName"
                     }
                   ]
                 ]
@@ -120,10 +120,10 @@
                 [
                   "influxdb",
                   {
-                    "Ref": "BaseSubDomainName"
+                    "Ref": "SubDomainName"
                   },
                   {
-                    "Ref": "BaseDomainName"
+                    "Ref": "DomainName"
                   }
                 ]
               ]
@@ -136,10 +136,10 @@
                   ".",
                   [
                     {
-                      "Ref": "BaseSubDomainName"
+                      "Ref": "SubDomainName"
                     },
                     {
-                      "Ref": "BaseDomainName"
+                      "Ref": "DomainName"
                     }
                   ]
                 ]
@@ -153,10 +153,10 @@
                 [
                   "registry",
                   {
-                    "Ref": "BaseSubDomainName"
+                    "Ref": "SubDomainName"
                   },
                   {
-                    "Ref": "BaseDomainName"
+                    "Ref": "DomainName"
                   }
                 ]
               ]
@@ -169,10 +169,10 @@
                   ".",
                   [
                     {
-                      "Ref": "BaseSubDomainName"
+                      "Ref": "SubDomainName"
                     },
                     {
-                      "Ref": "BaseDomainName"
+                      "Ref": "DomainName"
                     }
                   ]
                 ]
@@ -186,10 +186,10 @@
                 [
                   "jenkins",
                   {
-                    "Ref": "BaseSubDomainName"
+                    "Ref": "SubDomainName"
                   },
                   {
-                    "Ref": "BaseDomainName"
+                    "Ref": "DomainName"
                   }
                 ]
               ]
@@ -202,10 +202,10 @@
                   ".",
                   [
                     {
-                      "Ref": "BaseSubDomainName"
+                      "Ref": "SubDomainName"
                     },
                     {
-                      "Ref": "BaseDomainName"
+                      "Ref": "DomainName"
                     }
                   ]
                 ]
@@ -219,10 +219,10 @@
                 [
                   "kubeapi",
                   {
-                    "Ref": "BaseSubDomainName"
+                    "Ref": "SubDomainName"
                   },
                   {
-                    "Ref": "BaseDomainName"
+                    "Ref": "DomainName"
                   }
                 ]
               ]
@@ -235,10 +235,10 @@
                   ".",
                   [
                     {
-                      "Ref": "BaseSubDomainName"
+                      "Ref": "SubDomainName"
                     },
                     {
-                      "Ref": "BaseDomainName"
+                      "Ref": "DomainName"
                     }
                   ]
                 ]
@@ -252,10 +252,10 @@
                 [
                   "kubedash",
                   {
-                    "Ref": "BaseSubDomainName"
+                    "Ref": "SubDomainName"
                   },
                   {
-                    "Ref": "BaseDomainName"
+                    "Ref": "DomainName"
                   }
                 ]
               ]
@@ -268,10 +268,10 @@
                   ".",
                   [
                     {
-                      "Ref": "BaseSubDomainName"
+                      "Ref": "SubDomainName"
                     },
                     {
-                      "Ref": "BaseDomainName"
+                      "Ref": "DomainName"
                     }
                   ]
                 ]
