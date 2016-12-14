@@ -35,7 +35,8 @@
       "Default": "m3.medium",
       "AllowedValues": [
         "m3.medium",
-        "m4.xlarge"
+        "m4.xlarge",
+        "r3.large"
       ],
       "ConstraintDescription": "Must be a valid EC2 PV instance type. Note: m1.small is not supported."
     },
@@ -121,7 +122,7 @@
           {
             "DeviceName": "/dev/sdk",
             "Ebs": {
-              "VolumeSize": "16"
+              "VolumeSize": "20"
             }
           }
         ],
@@ -186,8 +187,8 @@
           "Ref": "MadcoreClusterAutoScalingLaunchConfiguration"
         },
         "MinSize": "0",
-        "MaxSize": "1",
-        "DesiredCapacity": "1",
+        "MaxSize": "2",
+        "DesiredCapacity": "2",
         "VPCZoneIdentifier": [
           {
             "Ref": "PublicNetZoneA"

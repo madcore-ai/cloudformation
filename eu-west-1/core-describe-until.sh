@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 while (/usr/bin/true); do
   OUTPUT=`bash core-describe.sh | grep StackStatus`
   if [[ $OUTPUT =~ .*_COMPLETE.* ]]; then
