@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "MadCore, Ubuntu Xenial Base plus tools like Jenkins, Habitat, Docker, HAProxy, SSL Self-generated cert.",
+  "Description": "MadCore, Ubuntu Xenial Base plus tools like Jenkins, Habitat, Docker, HAProxy, Kubernetes, SSL Self-generated cert.",
   "Parameters": {
     "KeyName": {
       "Type": "String",
@@ -85,8 +85,7 @@
                 [
                   {
                     "Ref": "AWS::StackName"
-                  },
-                  "KeyServer"
+                  }
                 ]
               ]
             }

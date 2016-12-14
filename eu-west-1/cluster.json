@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Madcore-Cluster Auto Scale",
+  "Description": "Madcore-Cluster Auto Scale Spot Instances",
   "Parameters": {
     "VpcId": {
       "Type": "String",
@@ -11,7 +11,7 @@
     "NodesSubnet": {
       "Type": "String",
       "Description": "IP address of cluster nodes.",
-      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}",
+      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}/\\d{2}",
       "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx",
       "MaxLength": "15",
       "MinLength": "1"
@@ -80,15 +80,7 @@
             "FromPort": "0",
             "ToPort": "65535",
             "CidrIp": {
-              "Fn::Join": [
-                "",
-                [
-                  {
-                    "Ref": "NodesSubnet"
-                  },
-                  "/24"
-                ]
-              ]
+              "Ref": "NodesSubnet"
             }
           }
         ]

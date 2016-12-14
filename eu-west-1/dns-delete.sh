@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-aws cloudformation delete-stack --stack-name MADCORE-DNS
+aws cloudformation delete-stack --stack-name MADCORE-Dns

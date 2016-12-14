@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-aws cloudformation delete-stack --stack-name MADCORE-ControlBoxSmall
+aws cloudformation delete-stack --stack-name MADCORE-Core
