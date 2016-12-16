@@ -5,11 +5,11 @@
   },
   {
     "ParameterKey": "InstanceType",
-    "ParameterValue": "r3.large"
+    "ParameterValue": "m3.medium"
   },
   {
     "ParameterKey": "SpotPrice",
-    "ParameterValue": "0.05"
+    "ParameterValue": "0.02"
   },
   {
     "ParameterKey": "PublicNetZoneA",
@@ -21,6 +21,10 @@
   },
   {
     "ParameterKey": "MasterIP",
-    "ParameterValue": "10.99.101.56"
+    "ParameterValue": "10.99.101.253"
+  },
+  {
+    "ParameterKey": "S3BucketName",
+    "ParameterValue": "madcore-core-madcores3bucket-7z8rgf0kb58k"
   }
 ]

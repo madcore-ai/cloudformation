@@ -5,7 +5,7 @@
   },
   {
     "ParameterKey": "SubDomainName",
-    "ParameterValue": "geo"
+    "ParameterValue": "neo"
   },
   {
     "ParameterKey": "EC2PublicIP",

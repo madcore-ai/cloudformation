@@ -239,19 +239,19 @@
        "Value" : { "Ref" : "PublicNetZoneB" }
     },
     "PublicNetZoneC" : {
-       "Description" : "Subnet Group Public Az-C",
+       "Description" : "Subnet Public Az-C",
        "Value" : { "Ref" : "PublicNetZoneC" }
     },
     "PrivateNetZoneA" : {
-       "Description" : "Subnet Group Private Az-A",
+       "Description" : "Subnet Private Az-A",
        "Value" : { "Ref" : "PrivateNetZoneA" }
     },
     "PrivateNetZoneB" : {
-       "Description" : "Subnet Group Private Az-B",
+       "Description" : "Subnet Private Az-B",
        "Value" : { "Ref" : "PrivateNetZoneB" }
     },
     "PrivateNetZoneC" : {
-       "Description" : "Subnet Group Private Az-C",
+       "Description" : "Subnet Private Az-C",
        "Value" : { "Ref" : "PrivateNetZoneC" }
     }
    }
