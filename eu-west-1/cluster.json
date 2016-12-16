@@ -8,6 +8,12 @@
       "ConstraintDescription": "Must be valid VPC identifier vpc-xxxxxxxx",
       "Description": "The ID of the MadCore Virtual Private Network."
     },
+    "S3BucketName": {
+      "Type": "String",
+      "AllowedPattern": "madcore-core-.+",
+      "ConstraintDescription": "Must be valid S3 bucket name madcore-core-xxxxxxxx",
+      "Description": "S3 bucket name."
+    },
     "ClusterSubnetId": {
       "Type": "String",
       "Description": "IP address of cluster nodes.",
@@ -61,6 +67,92 @@
     }
   },
   "Resources": {
+    "MadcoreClusterRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "ec2.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "Policies": [
+          {
+            "PolicyName": "policy-madcore-cluster",
+            "PolicyDocument": {
+              "Statement": [
+                {
+                  "Action": [
+                    "ec2:DescribeTags",
+                    "ec2:StartInstances",
+                    "ec2:StopInstances"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": [
+                    "*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:GetObjectAcl",
+                    "s3:PutObject",
+                    "s3:PutObjectAcl"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:aws:s3:::",
+                          {
+                            "Ref": "S3BucketName"
+                          }
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "arn:aws:s3:::",
+                          {
+                            "Ref": "S3BucketName"
+                          },
+                          "/*"
+                        ]
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "MadcoreClusterInstanceProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Path": "/",
+        "Roles": [
+          {
+            "Ref": "MadcoreClusterRole"
+          }
+        ]
+      }
+    },
     "MadcoreClusterSecurityGroup": {
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
@@ -98,6 +190,9 @@
             },
             "AMI"
           ]
+        },
+        "IamInstanceProfile": {
+          "Ref": "MadcoreClusterInstanceProfile"
         },
         "SecurityGroups": [
           {
@@ -143,10 +238,11 @@
         "AWS::CloudFormation::Init": {
           "configSets": {
             "ClusterConfig": [
-              "kub_cluster_config"
+              "config_master_ip",
+              "config_s3_bucket"
             ]
           },
-          "kub_cluster_config": {
+          "config_master_ip": {
             "commands": {
               "environment": {
                 "command": {
@@ -168,6 +264,29 @@
                 }
               }
             }
+          },
+          "config_s3_bucket": {
+            "commands": {
+              "environment": {
+                "command": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "echo S3_BUCKET=",
+                      {
+                        "Ref": "S3BucketName"
+                      },
+                      " >> /etc/environment"
+                    ]
+                  ]
+                },
+                "env": {
+                  "S3_BUCKET": {
+                    "Ref": "S3BucketName"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -179,11 +298,18 @@
           "Ref": "MadcoreClusterAutoScalingLaunchConfiguration"
         },
         "MinSize": "0",
-        "MaxSize": "2",
-        "DesiredCapacity": "2",
+        "MaxSize": "1",
+        "DesiredCapacity": "1",
         "VPCZoneIdentifier": [
           {
             "Ref": "PublicNetZoneA"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ClusterNode",
+            "PropagateAtLaunch": "true"
           }
         ]
       }
