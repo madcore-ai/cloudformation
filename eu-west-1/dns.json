@@ -151,7 +151,40 @@
               "Fn::Join": [
                 ".",
                 [
-                  "registry",
+                  "zeppelin",
+                  {
+                    "Ref": "SubDomainName"
+                  },
+                  {
+                    "Ref": "DomainName"
+                  }
+                ]
+              ]
+            },
+            "Type": "CNAME",
+            "TTL": "300",
+            "ResourceRecords": [
+              {
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "SubDomainName"
+                    },
+                    {
+                      "Ref": "DomainName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "Name": {
+              "Fn::Join": [
+                ".",
+                [
+                  "spark",
                   {
                     "Ref": "SubDomainName"
                   },
