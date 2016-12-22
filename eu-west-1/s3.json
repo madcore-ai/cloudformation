@@ -1,0 +1,23 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Madcore S3 bucket.",
+  "Parameters": {
+  },
+  "Resources": {
+    "MadcoreS3Bucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "AccessControl": "AuthenticatedRead"
+      },
+      "DeletionPolicy": "Delete"
+    }
+  },
+  "Outputs": {
+    "S3BucketName": {
+      "Value": {
+        "Ref": "MadcoreS3Bucket"
+      },
+      "Description": "Name of the Amazon S3 bucket."
+    }
+  }
+}

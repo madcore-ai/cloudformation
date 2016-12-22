@@ -10,8 +10,7 @@
     },
     "S3BucketName": {
       "Type": "String",
-      "AllowedPattern": "madcore-core-.+",
-      "ConstraintDescription": "Must be valid S3 bucket name madcore-core-xxxxxxxx",
+      "ConstraintDescription": "Must be valid S3 bucket name.",
       "Description": "S3 bucket name."
     },
     "ClusterSubnetId": {
