@@ -22,6 +22,11 @@
       ],
       "ConstraintDescription": "Must be a valid EC2 PV instance type. Note: m1.small is not supported."
     },
+    "S3BucketName": {
+      "Type": "String",
+      "ConstraintDescription": "Must be valid S3 bucket name.",
+      "Description": "S3 bucket name."
+    },
     "FollowmeSecurityGroup": {
       "Type": "String",
       "AllowedPattern": "sg-[a-f0-9]{8}",
@@ -49,13 +54,6 @@
     }
   },
   "Resources": {
-    "MadcoreS3Bucket": {
-      "Type": "AWS::S3::Bucket",
-      "Properties": {
-        "AccessControl": "AuthenticatedRead"
-      },
-      "DeletionPolicy": "Delete"
-    },
     "MadCoreInstance": {
       "Type": "AWS::EC2::Instance",
       "Properties": {
@@ -194,8 +192,8 @@
                     "s3:PutObjectAcl"
                   ],
                   "Resource": [
-                    {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "MadcoreS3Bucket"}]]},
-                    {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "MadcoreS3Bucket"}, "/*"]]}
+                    {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "S3BucketName"}]]},
+                    {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "S3BucketName"}, "/*"]]}
                   ]
                 }
               ]
@@ -217,12 +215,6 @@
     }
   },
   "Outputs": {
-    "S3BucketName": {
-      "Value": {
-        "Ref": "MadcoreS3Bucket"
-      },
-      "Description": "Name of the Amazon S3 bucket."
-    },
     "MadCorePublicIp": {
       "Value": {
         "Fn::GetAtt": [

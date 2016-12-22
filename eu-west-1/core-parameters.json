@@ -2,7 +2,7 @@
   {
     "ParameterKey": "KeyName",
     "ParameterValue": "chirgeo"
-  }, 
+  },
   {
     "ParameterKey": "FollowmeSecurityGroup",
     "ParameterValue": "sg-9f2fb6f9"
@@ -14,5 +14,9 @@
   {
     "ParameterKey": "InstanceType",
     "ParameterValue": "t2.small"
+  },
+  {
+    "ParameterKey": "S3BucketName",
+    "ParameterValue": "madcore-core-madcores3bucket-7z8rgf0kb58k"
   }
 ]
