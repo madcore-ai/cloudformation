@@ -54,7 +54,7 @@
       "Properties": {
         "AccessControl": "AuthenticatedRead"
       },
-      "DeletionPolicy": "Delete"
+      "DeletionPolicy": "Retain"
     },
     "MadCoreInstance": {
       "Type": "AWS::EC2::Instance",
