@@ -223,6 +223,14 @@
         ]
       }
     },
+    "MadCorePrivateIp": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MadCoreInstance",
+          "PrivateIp"
+        ]
+      }
+    },
     "MadCorePublicDnsName": {
       "Value": {
         "Fn::GetAtt": [
