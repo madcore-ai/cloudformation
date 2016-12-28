@@ -43,13 +43,49 @@
   "Mappings": {
     "UbuntuXenialAMI": {
       "us-west-1": {
-        "AMI": "ami-b20542d2"
+        "AMI": "ami-b05203d0"
       },
       "us-east-1": {
-        "AMI": "ami-ddf13fb0"
+        "AMI": "ami-9dcfdb8a"
+      },
+      "ap-northeast-1": {
+        "AMI": "ami-18afc47f"
+      },
+      "ap-southeast-2": {
+        "AMI": "ami-e6b58e85"
+      },
+      "sa-east-1": {
+        "AMI": "ami-e075ed8c"
+      },
+      "ap-northeast-2": {
+        "AMI": "ami-93d600fd"
+      },
+      "ap-southeast-1": {
+        "AMI": "ami-87b917e4"
+      },
+      "ca-central-1": {
+        "AMI": "ami-7112a015"
+      },
+      "cn-north-1": {
+        "AMI": "ami-31499d5c"
+      },
+      "us-west-2": {
+        "AMI": "ami-b2d463d2"
+      },
+      "us-east-2": {
+        "AMI": "ami-fcc19b99"
+      },
+      "ap-south-1": {
+        "AMI": "ami-dd3442b2"
+      },
+      "eu-central-1": {
+        "AMI": "ami-fe408091"
       },
       "eu-west-1": {
-        "AMI": "ami-a4d44ed7"
+        "AMI": "ami-ca80a0b9"
+      },
+      "eu-west-2": {
+        "AMI": "ami-ede2e889"
       }
     }
   },
@@ -220,6 +256,14 @@
         "Fn::GetAtt": [
           "MadCoreInstance",
           "PublicIp"
+        ]
+      }
+    },
+    "MadCorePrivateIp": {
+      "Value": {
+        "Fn::GetAtt": [
+          "MadCoreInstance",
+          "PrivateIp"
         ]
       }
     },
