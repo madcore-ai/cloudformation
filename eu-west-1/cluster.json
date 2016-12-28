@@ -307,7 +307,7 @@
         "Tags": [
           {
             "Key": "Name",
-            "Value": "ClusterNode",
+            "Value": "MADCORE-Node",
             "PropagateAtLaunch": "true"
           }
         ]

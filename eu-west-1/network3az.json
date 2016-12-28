@@ -44,8 +44,12 @@
       "eu-west-1b" : {
         "PublicNet" : "10.99.102.0/24",
         "PrivateNet" : "10.99.202.0/24"
-      }
-    }
+      },        
+      "eu-west-1c" : {
+        "PublicNet" : "10.99.103.0/24",
+        "PrivateNet" : "10.99.203.0/24"                
+      }                   
+    } 
   },    
   "Resources": {  
     "VpcId" : {
@@ -85,6 +89,20 @@
         ]
       }
     },
+    "PublicNetZoneC" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VpcId" },
+        "AvailabilityZone": {"Fn::Select": ["2", {"Fn::GetAZs": ""}]},
+        "CidrBlock" :  { "Fn::FindInMap" : [ { "Ref" : "Env" }, "eu-west-1c", "PublicNet" ] },
+        "Tags" : [
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Environment", "Value" : { "Ref" : "Env" } },
+          { "Key" : "EnvLongName", "Value" : { "Fn::FindInMap" : [ "EnvCodeMap", { "Ref" : "Env" }, "LongName" ] } },        
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PublicZoneC"] ]} }
+        ]
+      }
+    },  
     "PrivateNetZoneA" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
@@ -113,6 +131,20 @@
         ]
       }
     },
+    "PrivateNetZoneC" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VpcId" },
+        "AvailabilityZone": {"Fn::Select": ["2", {"Fn::GetAZs": ""}]},
+        "CidrBlock" :  { "Fn::FindInMap" : [ { "Ref" : "Env" }, "eu-west-1c", "PrivateNet" ] },
+        "Tags" : [
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Environment", "Value" : { "Ref" : "Env" } },
+          { "Key" : "EnvLongName", "Value" : { "Fn::FindInMap" : [ "EnvCodeMap", { "Ref" : "Env" }, "LongName" ] } },        
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [  { "Ref" : "AWS::StackName"}, "-PrivateZoneC"] ]} }      
+        ]
+      }
+    },           
     "IgwId" : {
       "Type" : "AWS::EC2::InternetGateway",
       "Properties" : {
@@ -161,6 +193,13 @@
         "SubnetId": {"Ref": "PublicNetZoneB"}
       }         
     },
+    "SubnetRouteTableAssocAccessNetZoneC": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {"Ref": "PublicRouteTable"}, 
+        "SubnetId": {"Ref": "PublicNetZoneC"}
+      }         
+    },
     "VgwId" : {
       "Type" : "AWS::EC2::VPNGateway",
       "Properties" : {
@@ -199,6 +238,10 @@
        "Description" : "Subnet Public Az-B",
        "Value" : { "Ref" : "PublicNetZoneB" }
     },
+    "PublicNetZoneC" : {
+       "Description" : "Subnet Public Az-C",
+       "Value" : { "Ref" : "PublicNetZoneC" }
+    },
     "PrivateNetZoneA" : {
        "Description" : "Subnet Private Az-A",
        "Value" : { "Ref" : "PrivateNetZoneA" }
@@ -206,6 +249,10 @@
     "PrivateNetZoneB" : {
        "Description" : "Subnet Private Az-B",
        "Value" : { "Ref" : "PrivateNetZoneB" }
+    },
+    "PrivateNetZoneC" : {
+       "Description" : "Subnet Private Az-C",
+       "Value" : { "Ref" : "PrivateNetZoneC" }
     }
    }
    
