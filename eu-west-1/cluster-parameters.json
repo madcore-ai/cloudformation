@@ -1,30 +1,30 @@
 [
   {
-    "ParameterKey": "VpcId",
-    "ParameterValue": "vpc-6a80d00e"
-  },
+    "ParameterKey": "VpcId", 
+    "ParameterValue": "vpc-3aa3f35e"
+  }, 
   {
-    "ParameterKey": "InstanceType",
+    "ParameterKey": "InstanceType", 
     "ParameterValue": "m3.medium"
-  },
+  }, 
   {
-    "ParameterKey": "SpotPrice",
+    "ParameterKey": "SpotPrice", 
     "ParameterValue": "0.02"
-  },
+  }, 
   {
-    "ParameterKey": "PublicNetZoneA",
-    "ParameterValue": "subnet-f5d0bead"
-  },
+    "ParameterKey": "PublicNetZoneA", 
+    "ParameterValue": "subnet-21355c79"
+  }, 
   {
-    "ParameterKey": "ClusterSubnetId",
+    "ParameterKey": "ClusterSubnetId", 
     "ParameterValue": "10.99.101.0/24"
-  },
+  }, 
   {
-    "ParameterKey": "MasterIP",
-    "ParameterValue": "10.99.101.55"
-  },
+    "ParameterKey": "MasterIP", 
+    "ParameterValue": "10.99.101.78"
+  }, 
   {
-    "ParameterKey": "S3BucketName",
-    "ParameterValue": "madcore-s3-madcores3bucket-wpxxwgrpzd4j"
+    "ParameterKey": "S3BucketName", 
+    "ParameterValue": "madcore-s3-madcores3bucket-1kn8ye4bnyed6"
   }
 ]

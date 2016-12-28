@@ -1,14 +1,14 @@
 [
   {
-    "ParameterKey": "DomainName",
+    "ParameterKey": "DomainName", 
     "ParameterValue": "madcore.cloud"
-  },
+  }, 
   {
-    "ParameterKey": "SubDomainName",
-    "ParameterValue": "neo"
-  },
+    "ParameterKey": "SubDomainName", 
+    "ParameterValue": "chirgeo"
+  }, 
   {
-    "ParameterKey": "EC2PublicIP",
-    "ParameterValue": "52.48.228.200"
+    "ParameterKey": "EC2PublicIP", 
+    "ParameterValue": "52.49.104.47"
   }
 ]
