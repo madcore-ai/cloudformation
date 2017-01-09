@@ -1,0 +1,22 @@
+[
+  {
+    "ParameterKey": "KeyName", 
+    "ParameterValue": "chirgeo"
+  }, 
+  {
+    "ParameterKey": "FollowmeSecurityGroup", 
+    "ParameterValue": "sg-5b2e593d"
+  }, 
+  {
+    "ParameterKey": "PublicNetZoneA", 
+    "ParameterValue": "subnet-21355c79"
+  }, 
+  {
+    "ParameterKey": "InstanceType", 
+    "ParameterValue": "m3.medium"
+  }, 
+  {
+    "ParameterKey": "S3BucketName", 
+    "ParameterValue": "madcore-s3-madcores3bucket-1kn8ye4bnyed6"
+  }
+]
