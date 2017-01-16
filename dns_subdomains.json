@@ -1,0 +1,332 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Madcore Dns Delegation Setup",
+  "Parameters": {
+    "DomainName": {
+      "Type": "String",
+      "AllowedPattern": ".+",
+      "Description": "Domain name"
+    },
+    "SubDomainName": {
+      "Type": "String",
+      "AllowedPattern": ".+",
+      "Description": "Subdomain name"
+    },
+    "EC2PublicIP": {
+      "Type": "String",
+      "Description": "EC2 instance public IP",
+      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}",
+      "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx",
+      "MaxLength": "15",
+      "MinLength": "1"
+    }
+  },
+  "Resources": {
+    "MadcoreDNSHostedZone": {
+      "Type": "AWS::Route53::HostedZone",
+      "Properties": {
+        "HostedZoneConfig": {
+          "Comment": "Madcore hosted zone"
+        },
+        "Name": {
+          "Fn::Join": [
+            ".",
+            [
+              {
+                "Ref": "SubDomainName"
+              },
+              {
+                "Ref": "DomainName"
+              },
+              ""
+            ]
+          ]
+        }
+      }
+    },
+    "MadcoreEC2RecordSet": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "MadcoreDNSHostedZone"
+        },
+        "Comment": "EC2 instance type",
+        "Name": {
+          "Fn::Join": [
+            ".",
+            [
+              {
+                "Ref": "SubDomainName"
+              },
+              {
+                "Ref": "DomainName"
+              }
+            ]
+          ]
+        },
+        "Type": "A",
+        "TTL": "300",
+        "ResourceRecords": [
+          {
+            "Ref": "EC2PublicIP"
+          }
+        ]
+      }
+    },
+    "MadcoreDNSRecordSetGroup": {
+      "Type": "AWS::Route53::RecordSetGroup",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "MadcoreDNSHostedZone"
+        },
+        "RecordSets": [
+          {
+            "Name": {
+              "Fn::Join": [
+                ".",
+                [
+                  "grafana",
+                  {
+                    "Ref": "SubDomainName"
+                  },
+                  {
+                    "Ref": "DomainName"
+                  }
+                ]
+              ]
+            },
+            "Type": "CNAME",
+            "TTL": "300",
+            "ResourceRecords": [
+              {
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "SubDomainName"
+                    },
+                    {
+                      "Ref": "DomainName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "Name": {
+              "Fn::Join": [
+                ".",
+                [
+                  "influxdb",
+                  {
+                    "Ref": "SubDomainName"
+                  },
+                  {
+                    "Ref": "DomainName"
+                  }
+                ]
+              ]
+            },
+            "Type": "CNAME",
+            "TTL": "300",
+            "ResourceRecords": [
+              {
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "SubDomainName"
+                    },
+                    {
+                      "Ref": "DomainName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "Name": {
+              "Fn::Join": [
+                ".",
+                [
+                  "zeppelin",
+                  {
+                    "Ref": "SubDomainName"
+                  },
+                  {
+                    "Ref": "DomainName"
+                  }
+                ]
+              ]
+            },
+            "Type": "CNAME",
+            "TTL": "300",
+            "ResourceRecords": [
+              {
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "SubDomainName"
+                    },
+                    {
+                      "Ref": "DomainName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "Name": {
+              "Fn::Join": [
+                ".",
+                [
+                  "spark",
+                  {
+                    "Ref": "SubDomainName"
+                  },
+                  {
+                    "Ref": "DomainName"
+                  }
+                ]
+              ]
+            },
+            "Type": "CNAME",
+            "TTL": "300",
+            "ResourceRecords": [
+              {
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "SubDomainName"
+                    },
+                    {
+                      "Ref": "DomainName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "Name": {
+              "Fn::Join": [
+                ".",
+                [
+                  "jenkins",
+                  {
+                    "Ref": "SubDomainName"
+                  },
+                  {
+                    "Ref": "DomainName"
+                  }
+                ]
+              ]
+            },
+            "Type": "CNAME",
+            "TTL": "300",
+            "ResourceRecords": [
+              {
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "SubDomainName"
+                    },
+                    {
+                      "Ref": "DomainName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "Name": {
+              "Fn::Join": [
+                ".",
+                [
+                  "kubeapi",
+                  {
+                    "Ref": "SubDomainName"
+                  },
+                  {
+                    "Ref": "DomainName"
+                  }
+                ]
+              ]
+            },
+            "Type": "CNAME",
+            "TTL": "300",
+            "ResourceRecords": [
+              {
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "SubDomainName"
+                    },
+                    {
+                      "Ref": "DomainName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "Name": {
+              "Fn::Join": [
+                ".",
+                [
+                  "kubedash",
+                  {
+                    "Ref": "SubDomainName"
+                  },
+                  {
+                    "Ref": "DomainName"
+                  }
+                ]
+              ]
+            },
+            "Type": "CNAME",
+            "TTL": "300",
+            "ResourceRecords": [
+              {
+                "Fn::Join": [
+                  ".",
+                  [
+                    {
+                      "Ref": "SubDomainName"
+                    },
+                    {
+                      "Ref": "DomainName"
+                    }
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "HostedZoneID": {
+      "Description": "Hosted Zone ID",
+      "Value": {
+        "Ref": "MadcoreDNSHostedZone"
+      }
+    },
+    "MadcoreDNSHostedZoneName": {
+      "Description": "Hosted Zone Name",
+      "Value": {
+        "Ref": "MadcoreDNSHostedZone"
+      }
+    }
+  }
+}
