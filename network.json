@@ -2,48 +2,66 @@
   "AWSTemplateFormatVersion" : "2010-09-09",
   
   "Description" : "MadCore VPC Stack. Provisions: 3 private subnets, 3 public subnets, Internet Gateway, VPN Gateway",
-  
-  "Parameters" : {
-    "Type" : {
-      "Type" : "String",
-      "Description" : "Type",
-      "Default" : "Production",
-      "AllowedValues" : ["Production", "NonProduction" ],
-      "ConstraintDescription" : "Specify the type of VPC to provision e.g. NonProduction."
+  "Parameters": {
+    "Type": {
+      "Type": "String",
+      "Description": "Type",
+      "Default": "Prod",
+      "AllowedValues": [
+        "Prod",
+        "Dev"
+      ],
+      "ConstraintDescription": "Specify the type of VPC to provision e.g. NonProduction."
     },
-    "Env" : {
-      "Type" : "String",
-      "AllowedValues" : ["madcore"],
-      "Default" : "madcore",
-      "Description" : "The Environment type to provision e.g. madcore.",
-      "ConstraintDescription" : "Specify an environment to provision e.g. dev for development environment."
-    }, 
+    "Env": {
+      "Type": "String",
+      "AllowedValues": [
+        "madcore",
+        "madcoredev"
+      ],
+      "Default": "madcore",
+      "Description": "The Environment type to provision e.g. madcore.",
+      "ConstraintDescription": "Specify an environment to provision e.g. dev for development environment."
+    },
     "VPCCIDRBlock": {
       "Type": "String",
-      "Description": "The CIDR block for the VPC", 
-      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}/\\d\\d", 
-      "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx/xx",       
-      "MaxLength": "18", 
-      "MinLength": "1" 
-    }    
+      "Description": "The CIDR block for the VPC",
+      "AllowedPattern": "\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}+\\.\\d{1,3}/\\d\\d",
+      "ConstraintDescription": "Must be a valid CIDR IP address xx.xx.xx.xx/xx",
+      "MaxLength": "18",
+      "MinLength": "1"
+    }
   },    
   "Conditions" : {
-    "ShouldCreateProdResources" : {"Fn::Equals" : [{"Ref" : "Type"}, "Production"]}
+    "ShouldCreateProdResources" : {"Fn::Equals" : [{"Ref" : "Type"}, "Prod"]}
   },
-  "Mappings": { 
-    "EnvCodeMap"     : {       
-      "madcore" : {
-        "LongName" : "MADCORE"
+  "Mappings": {
+    "EnvCodeMap": {
+      "madcoredev": {
+        "LongName": "MADCORE-DEV"
+      },
+      "madcore": {
+        "LongName": "MADCORE"
       }
-    }, 
-    "madcore"     : {
-      "eu-west-1a" : {
-        "PublicNet" : "10.99.101.0/24",
-        "PrivateNet" : "10.99.201.0/24"
-      },        
-      "eu-west-1b" : {
-        "PublicNet" : "10.99.102.0/24",
-        "PrivateNet" : "10.99.202.0/24"
+    },
+    "madcore": {
+      "eu-west-1a": {
+        "PublicNet": "10.99.101.0/24",
+        "PrivateNet": "10.99.201.0/24"
+      },
+      "eu-west-1b": {
+        "PublicNet": "10.99.102.0/24",
+        "PrivateNet": "10.99.202.0/24"
+      }
+    },
+    "madcoredev": {
+      "eu-west-1a": {
+        "PublicNet": "10.99.101.0/24",
+        "PrivateNet": "10.99.201.0/24"
+      },
+      "eu-west-1b": {
+        "PublicNet": "10.99.102.0/24",
+        "PrivateNet": "10.99.202.0/24"
       }
     }
   },    

@@ -38,6 +38,26 @@
       "AllowedPattern": "subnet-[a-f0-9]{8}",
       "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx",
       "Description": "MadCore Public Subnet Zone A"
+    },
+    "BranchName": {
+      "Type": "String",
+      "Default": "master",
+      "Description": "Core repo branch name"
+    },
+    "CommitID": {
+      "Type": "String",
+      "Default": "FETCH_HEAD",
+      "Description": "Core repo commit id"
+    },
+    "PluginsBranchName": {
+      "Type": "String",
+      "Default": "master",
+      "Description": "Plugins repo branch name"
+    },
+    "PluginsCommitID": {
+      "Type": "String",
+      "Default": "FETCH_HEAD",
+      "Description": "Plugins repo commit id"
     }
   },
   "Mappings": {
@@ -133,19 +153,36 @@
           }
         ],
         "UserData": {
-          "Fn::Join": [
-            "",
-            [
-              "IyEvYmluL2Jhc2ggLXYNCiMgIDIwMTYgTWFkY29yZSBMdGQgKGMpDQojIE1haW50YWluZWQgYnkgUGV0",
-              "ZXIgU3R5ayAoZGV2b3BzZmFjdG9yeUBzdHlrLnR2KQ0KDQpzdWRvIGVjaG8gRU5WPUFXUyA+PiAvZXRj",
-              "L2Vudmlyb25tZW50DQoNCiMgUFJFQ09ORklHVVJFIG1hZGNvcmUNCnN1ZG8gYXB0LWdldCB1cGRhdGUN",
-              "CnN1ZG8gYXB0LWdldCBpbnN0YWxsIGdpdCAteQ0Kc3VkbyBta2RpciAtcCAvb3B0L21hZGNvcmUNCnN1",
-              "ZG8gY2hvd24gdWJ1bnR1OnVidW50dSAvb3B0L21hZGNvcmUNCmdpdCBjbG9uZSBodHRwczovL2dpdGh1",
-              "Yi5jb20vbWFkY29yZS1haS9jb3JlLmdpdCAvb3B0L21hZGNvcmUNCnN1ZG8gY2htb2QgK3ggL29wdC9t",
-              "YWRjb3JlL2NvcmUtaW5zdGFsbC5zaA0Kc3VkbyAiL29wdC9tYWRjb3JlL2NvcmUtaW5zdGFsbC5zaCIN",
-              "Cg=="
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash -v\n",
+                "# Madcore Kubernetes Node Pre Configure\n",
+                "# Maintained by Madcore Ltd (humans@madcore.ai)\n",
+                "sudo echo ENV=AWS >> /etc/environment\n",
+                "sudo echo MADCORE_BRANCH=", {"Ref": "BranchName"}, " >> /etc/environment\n",
+                "sudo echo MADCORE_COMMIT=", {"Ref": "CommitID"}, " >> /etc/environment\n",
+                "sudo echo MADCORE_PLUGINS_BRANCH=", {"Ref": "PluginsBranchName"}, " >> /etc/environment\n",
+                "sudo echo MADCORE_PLUGINS_COMMIT=", {"Ref": "PluginsCommitID"}, " >> /etc/environment\n",
+                "sudo echo S3_BUCKET=", {"Ref": "S3BucketName"}, " >> /etc/environment\n",
+                "# PRECONFIGURE madcore\n",
+                "sudo apt-get update\n",
+                "sudo apt-get install git -y\n",
+                "sudo mkdir -p /opt/madcore\n",
+                "sudo chown ubuntu:ubuntu /opt/madcore\n",
+                "git clone -b ", {"Ref": "BranchName"}, " https://github.com/madcore-ai/core.git /opt/madcore\n",
+                "pushd /opt/madcore\n",
+                "git fetch\n",
+                "git --no-pager log -50 --pretty=oneline\n",
+                "git reset --hard ", {"Ref": "CommitID"}, "\n",
+                "git --no-pager log -1\n",
+                "popd\n",
+                "sudo chmod +x /opt/madcore/core-install.sh\n",
+                "sudo \"/opt/madcore/core-install.sh\"\n"
+              ]
             ]
-          ]
+          }
         },
         "NetworkInterfaces": [
           {
