@@ -271,7 +271,26 @@
                     {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "S3BucketName"}]]},
                     {"Fn::Join": ["", ["arn:aws:s3:::", {"Ref": "S3BucketName"}, "/*"]]}
                   ]
-                }
+                },
+                {
+                     "Effect": "Allow",
+                     "Action": [
+                         "ec2:CreateRoute",
+                         "ec2:DeleteRoute",
+                         "ec2:ReplaceRoute"
+                     ],
+                     "Resource": [
+                         "*"
+                     ]
+               },
+               {
+                     "Effect": "Allow",
+                     "Action": [
+                         "ec2:DescribeRouteTables",
+                         "ec2:DescribeInstances"
+                     ],
+                     "Resource": "*"
+               }
               ]
             }
           }
