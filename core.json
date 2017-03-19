@@ -114,6 +114,7 @@
       "Type": "AWS::EC2::Instance",
       "Properties": {
         "InstanceType": {"Ref": "InstanceType"},
+        "SourceDestCheck": "false"
         "ImageId": {
           "Fn::FindInMap": [
             "UbuntuXenialAMI",
@@ -188,7 +189,6 @@
           {
             "AssociatePublicIpAddress": true,
             "DeleteOnTermination": true,
-            "SourceDestCheck": false,
             "DeviceIndex": "0",
             "SubnetId": {
               "Ref": "PublicNetZoneA"
