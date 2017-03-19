@@ -114,7 +114,7 @@
       "Type": "AWS::EC2::Instance",
       "Properties": {
         "InstanceType": {"Ref": "InstanceType"},
-        "SourceDestCheck": "false"
+        "SourceDestCheck": false,
         "ImageId": {
           "Fn::FindInMap": [
             "UbuntuXenialAMI",
