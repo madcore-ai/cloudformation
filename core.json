@@ -277,7 +277,8 @@
                      "Action": [
                          "ec2:CreateRoute",
                          "ec2:DeleteRoute",
-                         "ec2:ReplaceRoute"
+                         "ec2:ReplaceRoute",
+                         "ec2:ModifyInstanceAttribute"
                      ],
                      "Resource": [
                          "*"
