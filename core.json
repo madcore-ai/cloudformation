@@ -188,6 +188,7 @@
           {
             "AssociatePublicIpAddress": true,
             "DeleteOnTermination": true,
+            "SourceDestCheck": false,
             "DeviceIndex": "0",
             "SubnetId": {
               "Ref": "PublicNetZoneA"
