@@ -32,6 +32,7 @@
           { "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  },
           { "IpProtocol" : "tcp", "FromPort" : "443", "ToPort" : "443", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  },
           { "IpProtocol" : "tcp", "FromPort" : "8080", "ToPort" : "8080", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  },
+          { "IpProtocol" : "tcp", "FromPort" : "9092", "ToPort" : "9092", "CidrIp" :  { "Fn::Join" : [ "", [ { "Ref" : "FollowMeIpAddress"}, "/32"] ]}  },
           { "IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "CidrIp" :  "0.0.0.0/0"},
           { "IpProtocol" : "tcp", "FromPort" : "0", "ToPort" : "65535", "CidrIp" :  "10.99.101.0/24"  },
           { "IpProtocol" : "udp", "FromPort" : "0", "ToPort" : "65535", "CidrIp" :  "10.99.101.0/24"  },
