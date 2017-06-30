@@ -51,17 +51,73 @@
       "ConstraintDescription": "Must be valid security group identifier sg-xxxxxxxx",
       "Description": "Madcore-Cluster Public Subnet Zone A"
     }
+    "BranchName": {
+      "Type": "String",
+      "Default": "master",
+      "Description": "Core repo branch name"
+    },
+    "CommitID": {
+      "Type": "String",
+      "Default": "FETCH_HEAD",
+      "Description": "Core repo commit id"
+    },
+    "PluginsBranchName": {
+      "Type": "String",
+      "Default": "master",
+      "Description": "Plugins repo branch name"
+    },
+    "PluginsCommitID": {
+      "Type": "String",
+      "Default": "FETCH_HEAD",
+      "Description": "Plugins repo commit id"
+    }
   },
   "Mappings": {
     "UbuntuXenialAMI": {
       "us-west-1": {
-        "AMI": "ami-b20542d2"
+        "AMI": "ami-b05203d0"
       },
       "us-east-1": {
-        "AMI": "ami-ddf13fb0"
+        "AMI": "ami-9dcfdb8a"
+      },
+      "ap-northeast-1": {
+        "AMI": "ami-18afc47f"
+      },
+      "ap-southeast-2": {
+        "AMI": "ami-e6b58e85"
+      },
+      "sa-east-1": {
+        "AMI": "ami-e075ed8c"
+      },
+      "ap-northeast-2": {
+        "AMI": "ami-93d600fd"
+      },
+      "ap-southeast-1": {
+        "AMI": "ami-87b917e4"
+      },
+      "ca-central-1": {
+        "AMI": "ami-7112a015"
+      },
+      "cn-north-1": {
+        "AMI": "ami-31499d5c"
+      },
+      "us-west-2": {
+        "AMI": "ami-b2d463d2"
+      },
+      "us-east-2": {
+        "AMI": "ami-fcc19b99"
+      },
+      "ap-south-1": {
+        "AMI": "ami-dd3442b2"
+      },
+      "eu-central-1": {
+        "AMI": "ami-fe408091"
       },
       "eu-west-1": {
-        "AMI": "ami-a4d44ed7"
+        "AMI": "ami-ca80a0b9"
+      },
+      "eu-west-2": {
+        "AMI": "ami-ede2e889"
       }
     }
   },
@@ -250,24 +306,37 @@
         ],
         "KeyName": "madcore_cluster",
         "UserData": {
-          "Fn::Join": [
-            "",
-            [
-              "IyEvYmluL2Jhc2ggLXYNCiMgTWFkY29yZSBLdWJlcm5ldGVzIE5vZGUgUHJlIENvbmZpZ3VyZQ0KIyBN",
-              "YWludGFpbmVkIGJ5IE1hZGNvcmUgTHRkIChodW1hbnNAbWFkY29yZS5haSkNCg0Kc3VkbyBlY2hvIEVO",
-              "Vj1BV1MgPj4gL2V0Yy9lbnZpcm9ubWVudA0KDQpLVUJfTUFTVEVSX0lQPSIke0tVQl9NQVNURVJfSVA6",
-              "LTEwLjk5LjEwMS45OX0iDQoNCiMgUFJFQ09ORklHVVJFIG1hZGNvcmUNCnN1ZG8gYXB0LWdldCB1cGRh",
-              "dGUNCnN1ZG8gYXB0LWdldCBpbnN0YWxsIGdpdCAteQ0Kc3VkbyBta2RpciAtcCAvb3B0L21hZGNvcmUN",
-              "CnN1ZG8gY2hvd24gdWJ1bnR1OnVidW50dSAvb3B0L21hZGNvcmUNCmdpdCBjbG9uZSBodHRwczovL2dp",
-              "dGh1Yi5jb20vbWFkY29yZS1haS9jb3JlLmdpdCAvb3B0L21hZGNvcmUNCg0Kc3VkbyBjaG1vZCAreCAv",
-              "b3B0L21hZGNvcmUva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0LnNoDQpzdWRvICIvb3B0L21hZGNv",
-              "cmUva3ViZXJuZXRlcy9jbHVzdGVyL2Nmbi1pbml0LnNoIg0KDQpzdWRvIGNobW9kICt4IC9vcHQvbWFk",
-              "Y29yZS9rdWJlcm5ldGVzL2NsdXN0ZXIvbm9kZS1pbnN0YWxsLnNoDQpzdWRvICIvb3B0L21hZGNvcmUv",
-              "a3ViZXJuZXRlcy9jbHVzdGVyL25vZGUtaW5zdGFsbC5zaCINCg=="
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash -v\n",
+                "# Madcore Kubernetes Node Pre Configure\n",
+                "# Maintained by Madcore Ltd (humans@madcore.ai)\n",
+                "sudo echo ENV=AWS >> /etc/environment\n",
+                "sudo echo MADCORE_BRANCH=", {"Ref": "BranchName"}, " >> /etc/environment\n",
+                "sudo echo MADCORE_COMMIT=", {"Ref": "CommitID"}, " >> /etc/environment\n",
+                "sudo echo MADCORE_PLUGINS_BRANCH=", {"Ref": "PluginsBranchName"}, " >> /etc/environment\n",
+                "sudo echo MADCORE_PLUGINS_COMMIT=", {"Ref": "PluginsCommitID"}, " >> /etc/environment\n",
+                "sudo echo S3_BUCKET=", {"Ref": "S3BucketName"}, " >> /etc/environment\n",
+                "# PRECONFIGURE madcore\n",
+                "sudo apt-get update\n",
+                "sudo apt-get install git -y\n",
+                "sudo mkdir -p /opt/madcore\n",
+                "sudo chown ubuntu:ubuntu /opt/madcore\n",
+                "git clone -b ", {"Ref": "BranchName"}, " https://github.com/madcore-ai/core.git /opt/madcore\n",
+                "pushd /opt/madcore\n",
+                "git fetch\n",
+                "git --no-pager log -50 --pretty=oneline\n",
+                "git reset --hard ", {"Ref": "CommitID"}, "\n",
+                "git --no-pager log -1\n",
+                "popd\n",
+                "sudo chmod +x /opt/madcore/node-install.sh\n",
+                "sudo \"/opt/madcore/node-install.sh\"\n"
+              ]
             ]
-          ]
-        }
-      },
+          }
+        },
       "Metadata": {
         "Comment1": "Configure the bootstrap helpers to setup cluster configs",
         "AWS::CloudFormation::Init": {
